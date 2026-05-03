@@ -7,223 +7,224 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&family=DotGothic16&family=Yuji+Syuku&family=Reggae+One&family=Hachi+Maru+Pop&family=RocknRoll+One&display=swap" rel="stylesheet">
 <style>
-:root {
-  --pk: #FF3D9A;
-  --cy: #00E5FF;
-  --yw: #FFE135;
-  --pu: #B14AED;
-  --gn: #39FF14;
-  --og: #FF6B1A;
-  --bg: #0A0018;
-  --dk: #1A0033;
-  --card: rgba(255,255,255,0.04);
-  --border: rgba(255,61,154,0.25);
+:root{
+  --pk:#FF3D9A;--cy:#00E5FF;--yw:#FFE135;--pu:#B14AED;
+  --gn:#39FF14;--og:#FF6B1A;--bg:#0A0018;--dk:#1A0033;
+  --card:rgba(255,255,255,0.04);--border:rgba(255,61,154,0.25);
 }
-
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow-x:hidden;}
+body{background:var(--bg);font-family:'Zen Maru Gothic',sans-serif;color:#fff;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 20% 30%,rgba(177,74,237,.15) 0%,transparent 60%),radial-gradient(ellipse 50% 60% at 80% 70%,rgba(255,61,154,.12) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 50% 10%,rgba(0,229,255,.08) 0%,transparent 50%);pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px);pointer-events:none;z-index:999;}
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:8px 10px 40px;}
 
-body{
-  background:var(--bg);
-  font-family:'Zen Maru Gothic',sans-serif;
-  color:#fff;
-  min-height:100vh;
-  overflow-x:hidden;
-}
+/* HEADER */
+.hdr{text-align:center;padding:12px 0 6px;}
+.hdr-logo{font-family:'Reggae One',sans-serif;font-size:2.4rem;letter-spacing:6px;background:linear-gradient(90deg,var(--pk),var(--yw),var(--cy),var(--pu),var(--pk));background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite;filter:drop-shadow(0 0 12px rgba(255,61,154,.6));}
+.hdr-sub{font-family:'DotGothic16',monospace;font-size:.58rem;color:var(--cy);letter-spacing:5px;margin-top:2px;opacity:.8;}
+@keyframes shimmer{0%{background-position:0%}100%{background-position:300%}}
+.deco-bar{height:2px;background:linear-gradient(90deg,transparent,var(--pk),var(--cy),var(--yw),transparent);margin:8px 0;border-radius:2px;animation:shimmer 3s linear infinite;background-size:300%;}
 
-/* Animated BG */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 60% 40% at 20% 30%, rgba(177,74,237,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 60% at 80% 70%, rgba(255,61,154,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 50% 10%, rgba(0,229,255,0.08) 0%, transparent 50%);
-  pointer-events:none;z-index:0;
-  animation:bgPulse 8s ease-in-out infinite alternate;
-}
-@keyframes bgPulse{
-  0%{opacity:0.7;}100%{opacity:1;}
-}
-
-/* Scanlines */
-body::after{
-  content:'';
-  position:fixed;inset:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);
-  pointer-events:none;z-index:999;
-}
-
-.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:8px 10px 30px;}
-
-/* ===== HEADER ===== */
-.hdr{text-align:center;padding:12px 0 6px;position:relative;}
-.hdr-logo{
-  font-family:'Reggae One',sans-serif;
-  font-size:2.6rem;
-  letter-spacing:6px;
-  background:linear-gradient(90deg,var(--pk),var(--yw),var(--cy),var(--pu),var(--pk));
-  background-size:300%;
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:logoShimmer 4s linear infinite;
-  filter:drop-shadow(0 0 12px rgba(255,61,154,0.6));
-}
-@keyframes logoShimmer{0%{background-position:0%}100%{background-position:300%}}
-.hdr-sub{font-family:'DotGothic16',monospace;font-size:0.6rem;color:var(--cy);letter-spacing:5px;margin-top:3px;opacity:0.8;}
-
-.deco-bar{height:2px;background:linear-gradient(90deg,transparent,var(--pk),var(--cy),var(--yw),transparent);margin:8px 0;border-radius:2px;animation:logoShimmer 3s linear infinite;background-size:300%;}
-
-/* ===== STEP NAV ===== */
+/* STEPS */
 .steps{display:flex;justify-content:center;align-items:center;gap:0;margin:6px 0;}
-.step{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:default;}
-.step-circle{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;color:rgba(255,255,255,0.3);transition:all .3s;}
-.step-label{font-size:0.55rem;color:rgba(255,255,255,0.3);letter-spacing:1px;transition:all .3s;}
+.step{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.step-circle{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:900;color:rgba(255,255,255,.3);transition:all .3s;}
+.step-label{font-size:.52rem;color:rgba(255,255,255,.3);letter-spacing:1px;transition:all .3s;}
 .step.active .step-circle{background:var(--yw);border-color:var(--yw);color:var(--bg);box-shadow:0 0 12px var(--yw);}
 .step.active .step-label{color:var(--yw);}
 .step.done .step-circle{background:var(--gn);border-color:var(--gn);color:var(--bg);}
 .step.done .step-label{color:var(--gn);}
-.step-line{width:40px;height:2px;background:rgba(255,255,255,0.1);margin-bottom:14px;}
+.step-line{width:36px;height:2px;background:rgba(255,255,255,.1);margin-bottom:14px;}
 
-/* ===== PANELS ===== */
-.panel{display:none;animation:slideIn .35s ease;}
+/* PANEL */
+.panel{display:none;animation:fadeIn .35s ease;}
 .panel.active{display:block;}
-@keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* ===== CARD ===== */
+/* CARD */
 .card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:14px;margin-bottom:10px;backdrop-filter:blur(12px);}
-.card.cyan-border{border-color:rgba(0,229,255,0.25);}
-.card.yellow-border{border-color:rgba(255,225,53,0.25);}
+.card.cy{border-color:rgba(0,229,255,.22);}
+.card.yw{border-color:rgba(255,225,53,.22);}
 
-/* ===== SECTION LABEL ===== */
-.slabel{font-family:'DotGothic16',monospace;font-size:0.62rem;color:var(--cy);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:5px;}
-.slabel::before{content:'◆';color:var(--pk);font-size:0.5rem;}
+/* LABEL */
+.slabel{font-family:'DotGothic16',monospace;font-size:.6rem;color:var(--cy);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+.slabel::before{content:'◆';color:var(--pk);font-size:.48rem;}
 
-/* ===== FRAME PICKER ===== */
-.frame-picker{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
-.fbtn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7);font-size:0.68rem;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;transition:all .2s;font-weight:700;}
+/* ===== PANEL 0: SIZE SELECT ===== */
+.size-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0;}
+.size-card{border:2px solid rgba(255,255,255,.15);border-radius:12px;padding:14px 8px;cursor:pointer;text-align:center;transition:all .25s;background:rgba(255,255,255,.03);}
+.size-card:hover{border-color:var(--pk);background:rgba(255,61,154,.08);}
+.size-card.sel{border-color:var(--pk);background:rgba(255,61,154,.12);box-shadow:0 0 14px rgba(255,61,154,.35);}
+.size-icon{margin:0 auto 8px;border:2.5px solid currentColor;border-radius:4px;transition:all .25s;}
+.size-card.sel .size-icon{border-color:var(--pk);}
+.size-card:not(.sel) .size-icon{border-color:rgba(255,255,255,.3);}
+.size-name{font-size:.72rem;font-weight:700;margin-bottom:3px;}
+.size-desc{font-family:'DotGothic16',monospace;font-size:.55rem;color:rgba(255,255,255,.45);}
+.size-card.sel .size-name{color:var(--pk);}
+
+/* FRAME PICKER */
+.frame-picker{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
+.fbtn{padding:5px 11px;border-radius:20px;border:1.5px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);font-size:.66rem;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;transition:all .2s;font-weight:700;}
 .fbtn:hover{border-color:var(--pk);color:var(--pk);}
-.fbtn.sel{background:var(--pk);border-color:var(--pk);color:#fff;box-shadow:0 0 10px rgba(255,61,154,0.5);}
+.fbtn.sel{background:var(--pk);border-color:var(--pk);color:#fff;box-shadow:0 0 10px rgba(255,61,154,.5);}
 
-/* ===== CAMERA ===== */
-.cam-wrap{position:relative;border-radius:12px;overflow:hidden;background:#000;aspect-ratio:4/3;border:2px solid var(--pk);box-shadow:0 0 20px rgba(255,61,154,0.35),inset 0 0 30px rgba(0,0,0,0.6);max-height:320px;}
+/* CAMERA */
+.cam-outer{display:flex;justify-content:center;margin-bottom:8px;}
+.cam-wrap{position:relative;border-radius:12px;overflow:hidden;background:#000;border:2px solid var(--pk);box-shadow:0 0 20px rgba(255,61,154,.35),inset 0 0 30px rgba(0,0,0,.6);}
 #videoEl{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block;}
-.cam-corners .corner{position:absolute;width:20px;height:20px;border-color:var(--cy);border-style:solid;opacity:.9;}
-.corner.tl{top:7px;left:7px;border-width:2.5px 0 0 2.5px;}
-.corner.tr{top:7px;right:7px;border-width:2.5px 2.5px 0 0;}
-.corner.bl{bottom:7px;left:7px;border-width:0 0 2.5px 2.5px;}
-.corner.br{bottom:7px;right:7px;border-width:0 2.5px 2.5px 0;}
-.countdown-ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);font-family:'Reggae One',sans-serif;font-size:7rem;color:var(--yw);text-shadow:0 0 40px var(--yw),0 0 80px var(--og);pointer-events:none;opacity:0;z-index:10;transition:opacity .15s;}
+.cam-corners .corner{position:absolute;width:18px;height:18px;border-color:var(--cy);border-style:solid;opacity:.9;}
+.corner.tl{top:6px;left:6px;border-width:2.5px 0 0 2.5px;}
+.corner.tr{top:6px;right:6px;border-width:2.5px 2.5px 0 0;}
+.corner.bl{bottom:6px;left:6px;border-width:0 0 2.5px 2.5px;}
+.corner.br{bottom:6px;right:6px;border-width:0 2.5px 2.5px 0;}
+.countdown-ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);font-family:'Reggae One',sans-serif;font-size:6rem;color:var(--yw);text-shadow:0 0 40px var(--yw);pointer-events:none;opacity:0;z-index:10;transition:opacity .15s;}
 .flash-ov{position:absolute;inset:0;background:#fff;pointer-events:none;opacity:0;z-index:20;transition:opacity .08s;}
 
-/* Thumbs */
-.thumbs{display:flex;gap:5px;margin-top:8px;justify-content:center;}
-.tslot{width:72px;height:54px;border-radius:6px;border:2px dashed rgba(255,255,255,0.15);background:rgba(0,0,0,0.3);overflow:hidden;position:relative;flex-shrink:0;}
+/* THUMBS */
+.thumbs{display:flex;gap:5px;justify-content:center;margin-bottom:10px;}
+.tslot{border-radius:6px;border:2px dashed rgba(255,255,255,.15);background:rgba(0,0,0,.3);overflow:hidden;position:relative;flex-shrink:0;}
 .tslot img{width:100%;height:100%;object-fit:cover;}
-.tslot .tnum{position:absolute;top:2px;left:3px;font-size:0.5rem;color:rgba(255,255,255,0.5);font-family:'DotGothic16',monospace;}
+.tslot .tnum{position:absolute;top:2px;left:3px;font-size:.48rem;color:rgba(255,255,255,.5);font-family:'DotGothic16',monospace;}
 .tslot.done{border-color:var(--gn);border-style:solid;}
 .tslot.cur{border-color:var(--yw);border-style:solid;animation:pulseY .9s ease infinite;}
 @keyframes pulseY{0%,100%{box-shadow:0 0 4px var(--yw);}50%{box-shadow:0 0 14px var(--yw);}}
 
-/* Shoot btn */
-.shoot-btn{width:100%;padding:13px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--pk),var(--pu));color:#fff;font-size:0.95rem;font-weight:900;font-family:'Reggae One',sans-serif;cursor:pointer;letter-spacing:4px;box-shadow:0 0 18px rgba(255,61,154,0.5);transition:all .2s;position:relative;overflow:hidden;}
-.shoot-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--pu),var(--pk));opacity:0;transition:opacity .2s;}
-.shoot-btn:hover::after{opacity:1;}
+/* SHOOT BTN */
+.shoot-btn{width:100%;padding:13px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--pk),var(--pu));color:#fff;font-size:.92rem;font-weight:900;font-family:'Reggae One',sans-serif;cursor:pointer;letter-spacing:4px;box-shadow:0 0 18px rgba(255,61,154,.5);transition:all .2s;position:relative;overflow:hidden;}
+.shoot-btn:hover{box-shadow:0 0 28px rgba(255,61,154,.7);}
 .shoot-btn:active{transform:scale(.97);}
-.shoot-btn:disabled{opacity:.45;cursor:not-allowed;}
+.shoot-btn:disabled{opacity:.4;cursor:not-allowed;}
 .shoot-btn span{position:relative;z-index:1;}
-.pcounter{text-align:center;font-family:'DotGothic16',monospace;font-size:0.65rem;color:rgba(255,255,255,0.5);margin-top:5px;letter-spacing:2px;}
+.pcounter{text-align:center;font-family:'DotGothic16',monospace;font-size:.63rem;color:rgba(255,255,255,.45);margin-top:5px;letter-spacing:2px;}
 
-/* ===== NAV BTNS ===== */
+/* NAV */
 .nav-row{display:flex;gap:8px;margin-top:10px;}
-.nbtn{flex:1;padding:9px;border-radius:30px;border:1.5px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.04);color:#fff;font-size:0.75rem;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;font-weight:700;letter-spacing:1px;transition:all .2s;}
+.nbtn{flex:1;padding:9px;border-radius:30px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);color:#fff;font-size:.72rem;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;font-weight:700;letter-spacing:1px;transition:all .2s;}
 .nbtn:hover{border-color:var(--pk);}
-.nbtn.next{background:linear-gradient(135deg,var(--pk),var(--pu));border-color:transparent;box-shadow:0 0 14px rgba(255,61,154,0.45);}
-.nbtn.next:hover{box-shadow:0 0 24px rgba(255,61,154,0.7);}
+.nbtn.next{background:linear-gradient(135deg,var(--pk),var(--pu));border-color:transparent;box-shadow:0 0 14px rgba(255,61,154,.45);}
+.nbtn.next:hover{box-shadow:0 0 24px rgba(255,61,154,.7);}
 .nbtn:disabled{opacity:.35;cursor:not-allowed;}
 
 /* ===== DECO PANEL ===== */
-.deco-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
-.dpwrap{position:relative;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border-color .2s;aspect-ratio:4/3;}
-.dpwrap:hover{border-color:rgba(0,229,255,0.5);}
-.dpwrap.sel{border-color:var(--yw);box-shadow:0 0 10px rgba(255,225,53,0.5);}
-.dpwrap canvas{width:100%;height:100%;display:block;}
-.dphint{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:0.5rem;color:rgba(255,255,255,0.6);background:rgba(0,0,0,0.55);padding:2px;font-family:'DotGothic16',monospace;}
+/* Single photo editor */
+.deco-single{display:flex;justify-content:center;margin-bottom:8px;}
+.deco-cv-wrap{position:relative;border-radius:10px;overflow:hidden;border:2px solid var(--cy);box-shadow:0 0 16px rgba(0,229,255,.3);cursor:crosshair;}
+#decoCanvas{display:block;}
 
-.sel-label{font-family:'DotGothic16',monospace;font-size:0.6rem;color:var(--yw);text-align:center;margin-bottom:8px;letter-spacing:2px;}
+/* Photo nav */
+.photo-nav{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:8px;}
+.pnav-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#fff;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.pnav-btn:hover{border-color:var(--pk);background:rgba(255,61,154,.15);}
+.pnav-btn:disabled{opacity:.3;cursor:not-allowed;}
+.photo-dots{display:flex;gap:5px;}
+.pdot{width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-family:'DotGothic16',monospace;font-size:.55rem;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;}
+.pdot.active{border-color:var(--yw);background:var(--yw);color:var(--bg);box-shadow:0 0 8px var(--yw);}
+.pdot.done{border-color:var(--gn);color:var(--gn);}
 
 /* Deco tools */
 .tool-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:8px;}
-.ti{flex:1;min-width:100px;padding:7px 11px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);color:#fff;font-family:'Zen Maru Gothic',sans-serif;font-size:0.82rem;outline:none;transition:border-color .2s;}
+.ti{flex:1;min-width:100px;padding:7px 11px;border-radius:8px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font-family:'Zen Maru Gothic',sans-serif;font-size:.82rem;outline:none;transition:border-color .2s;}
 .ti:focus{border-color:var(--cy);}
-.ta-btn{padding:7px 16px;border-radius:20px;border:none;background:linear-gradient(135deg,var(--cy),var(--pu));color:#fff;font-size:0.75rem;font-weight:bold;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;box-shadow:0 0 10px rgba(0,229,255,0.35);transition:all .2s;}
+.ta-btn{padding:7px 14px;border-radius:20px;border:none;background:linear-gradient(135deg,var(--cy),var(--pu));color:#fff;font-size:.72rem;font-weight:bold;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;box-shadow:0 0 10px rgba(0,229,255,.3);transition:all .2s;flex-shrink:0;}
 .ta-btn:hover{transform:scale(1.05);}
-.clr-btn{padding:7px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.18);background:transparent;color:rgba(255,255,255,0.55);font-size:0.7rem;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;transition:all .2s;}
+.clr-btn{padding:6px 10px;border-radius:20px;border:1.5px solid rgba(255,255,255,.18);background:transparent;color:rgba(255,255,255,.5);font-size:.68rem;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;transition:all .2s;}
 .clr-btn:hover{border-color:var(--og);color:var(--og);}
 
-/* Color swatches */
 .swatches{display:flex;gap:4px;flex-wrap:wrap;}
 .sw{width:20px;height:20px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .2s;flex-shrink:0;}
-.sw:hover,.sw.sel{border-color:#fff;transform:scale(1.25);box-shadow:0 0 6px currentColor;}
+.sw:hover,.sw.sel{border-color:#fff;transform:scale(1.25);box-shadow:0 0 6px rgba(255,255,255,.5);}
+.fslider{-webkit-appearance:none;width:85px;height:4px;border-radius:2px;background:rgba(255,255,255,.18);outline:none;}
+.fslider::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--pk);cursor:pointer;box-shadow:0 0 5px var(--pk);}
 
-/* Font selector */
 .font-sel-wrap{display:flex;gap:5px;flex-wrap:wrap;}
-.font-btn{padding:4px 10px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7);font-size:0.72rem;cursor:pointer;transition:all .2s;}
+.font-btn{padding:4px 9px;border-radius:12px;border:1.5px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);font-size:.68rem;cursor:pointer;transition:all .2s;}
 .font-btn:hover{border-color:var(--cy);}
 .font-btn.sel{background:var(--cy);border-color:var(--cy);color:var(--bg);}
 
-/* Font size */
-.fslider{-webkit-appearance:none;width:90px;height:4px;border-radius:2px;background:rgba(255,255,255,0.18);outline:none;}
-.fslider::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--pk);cursor:pointer;box-shadow:0 0 5px var(--pk);}
+/* BG picker */
+.bg-picker{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
+.bgcol{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .2s;flex-shrink:0;}
+.bgcol:hover,.bgcol.sel{border-color:#fff;transform:scale(1.2);box-shadow:0 0 8px rgba(255,255,255,.4);}
+.bgcol-custom{position:relative;overflow:hidden;background:conic-gradient(#ff3d9a,#ffe135,#00e5ff,#b14aed,#ff3d9a);border-radius:50%;width:22px;height:22px;border:2px solid rgba(255,255,255,.3);cursor:pointer;flex-shrink:0;}
+.bgcol-custom input[type=color]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 
-/* BG color picker */
-.bg-picker{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-.bgcol{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .2s;flex-shrink:0;}
-.bgcol:hover,.bgcol.sel{border-color:#fff;transform:scale(1.2);box-shadow:0 0 8px rgba(255,255,255,0.4);}
-.bgcol.custom-wrap{position:relative;overflow:hidden;}
-.bgcol.custom-wrap input[type=color]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-
-/* ===== ORIGINAL STAMPS ===== */
+/* STAMPS */
 .stamp-grid{display:flex;gap:5px;flex-wrap:wrap;}
-.ostamp{width:46px;height:46px;border-radius:8px;cursor:pointer;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
-.ostamp:hover{border-color:var(--pk);transform:scale(1.12);box-shadow:0 0 8px rgba(255,61,154,0.4);}
-.ostamp svg{width:32px;height:32px;pointer-events:none;}
+.ostamp{width:44px;height:44px;border-radius:8px;cursor:pointer;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;overflow:hidden;}
+.ostamp:hover{border-color:var(--pk);transform:scale(1.12);box-shadow:0 0 8px rgba(255,61,154,.4);}
+.ostamp svg{width:30px;height:30px;pointer-events:none;}
 
-/* ===== DRAG HINT ===== */
-.drag-hint{font-family:'DotGothic16',monospace;font-size:0.55rem;color:rgba(0,229,255,0.6);text-align:center;margin-bottom:4px;letter-spacing:1px;}
+/* Drag hint */
+.drag-hint{font-family:'DotGothic16',monospace;font-size:.52rem;color:rgba(0,229,255,.55);text-align:center;margin-bottom:5px;letter-spacing:1px;}
 
-/* ===== PRINT PANEL ===== */
+/* Selected item indicator */
+.sel-item-label{font-family:'DotGothic16',monospace;font-size:.55rem;color:var(--yw);text-align:center;margin-bottom:4px;min-height:14px;}
+
+/* PRINT */
 .print-wrap{display:flex;justify-content:center;margin-bottom:14px;}
-#printCanvas{border-radius:10px;box-shadow:0 0 30px rgba(255,61,154,0.5),0 0 60px rgba(0,229,255,0.2),0 8px 32px rgba(0,0,0,0.5);max-width:100%;height:auto;}
+#printCanvas{border-radius:10px;box-shadow:0 0 30px rgba(255,61,154,.5),0 0 60px rgba(0,229,255,.2),0 8px 32px rgba(0,0,0,.5);max-width:100%;height:auto;}
 .act-btns{display:flex;gap:8px;flex-wrap:wrap;}
-.abtn-p{flex:1;min-width:130px;padding:12px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--yw),var(--og));color:var(--bg);font-size:0.85rem;font-weight:900;font-family:'Reggae One',sans-serif;cursor:pointer;letter-spacing:3px;box-shadow:0 0 18px rgba(255,225,53,0.5);transition:all .2s;}
-.abtn-p:hover{transform:scale(1.03);box-shadow:0 0 28px rgba(255,225,53,0.7);}
-.abtn-s{flex:1;min-width:130px;padding:12px;border-radius:50px;border:1.5px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.05);color:#fff;font-size:0.8rem;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;letter-spacing:2px;transition:all .2s;}
+.abtn-p{flex:1;min-width:120px;padding:12px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--yw),var(--og));color:var(--bg);font-size:.82rem;font-weight:900;font-family:'Reggae One',sans-serif;cursor:pointer;letter-spacing:3px;box-shadow:0 0 18px rgba(255,225,53,.5);transition:all .2s;}
+.abtn-p:hover{transform:scale(1.03);box-shadow:0 0 28px rgba(255,225,53,.7);}
+.abtn-s{flex:1;min-width:120px;padding:12px;border-radius:50px;border:1.5px solid rgba(255,255,255,.22);background:rgba(255,255,255,.05);color:#fff;font-size:.78rem;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;letter-spacing:2px;transition:all .2s;}
 .abtn-s:hover{border-color:var(--pk);color:var(--pk);}
 
-.star-deco{text-align:center;font-family:'DotGothic16',monospace;font-size:0.7rem;color:var(--yw);letter-spacing:4px;opacity:.65;margin:8px 0;}
+.star-deco{text-align:center;font-family:'DotGothic16',monospace;font-size:.68rem;color:var(--yw);letter-spacing:4px;opacity:.6;margin:8px 0;}
+
+/* iOS tip */
+.ios-tip{font-family:'DotGothic16',monospace;font-size:.55rem;color:rgba(255,225,53,.6);text-align:center;margin-top:8px;line-height:1.8;letter-spacing:.5px;}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<!-- HEADER -->
 <div class="hdr">
   <div class="hdr-logo">★ PURIKURA ★</div>
-  <div class="hdr-sub">プリクラ Web Studio v2.0</div>
+  <div class="hdr-sub">プリクラ Web Studio v3.0</div>
 </div>
 <div class="deco-bar"></div>
 
-<!-- STEPS -->
 <div class="steps">
-  <div class="step active" id="s1"><div class="step-circle">1</div><div class="step-label">撮影</div></div>
+  <div class="step active" id="s0"><div class="step-circle">0</div><div class="step-label">サイズ</div></div>
+  <div class="step-line"></div>
+  <div class="step" id="s1"><div class="step-circle">1</div><div class="step-label">撮影</div></div>
   <div class="step-line"></div>
   <div class="step" id="s2"><div class="step-circle">2</div><div class="step-label">デコる</div></div>
   <div class="step-line"></div>
-  <div class="step" id="s3"><div class="step-circle">3</div><div class="step-label">プリント</div></div>
+  <div class="step" id="s3"><div class="step-circle">3</div><div class="step-label">完成</div></div>
 </div>
 <div class="deco-bar"></div>
 
-<!-- ===== PANEL 1 ===== -->
-<div class="panel active" id="p1">
+<!-- ===== PANEL 0: SIZE ===== -->
+<div class="panel active" id="p0">
+  <div class="card">
+    <div class="slabel">写真サイズを選ぼう</div>
+    <div class="size-grid" id="sizeGrid">
+      <div class="size-card sel" data-w="360" data-h="360" data-ratio="1">
+        <div class="size-icon" style="width:44px;height:44px;"></div>
+        <div class="size-name">スクエア</div>
+        <div class="size-desc">1:1</div>
+      </div>
+      <div class="size-card" data-w="360" data-h="480" data-ratio="portrait">
+        <div class="size-icon" style="width:36px;height:48px;"></div>
+        <div class="size-name">縦型</div>
+        <div class="size-desc">3:4</div>
+      </div>
+      <div class="size-card" data-w="480" data-h="360" data-ratio="landscape">
+        <div class="size-icon" style="width:48px;height:36px;"></div>
+        <div class="size-name">横型</div>
+        <div class="size-desc">4:3</div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nbtn next" onclick="goPanel(1)">撮影へ ▶</button>
+  </div>
+</div>
+
+<!-- ===== PANEL 1: CAMERA ===== -->
+<div class="panel" id="p1">
   <div class="card">
     <div class="slabel">フレームを選ぼう</div>
     <div class="frame-picker" id="framePicker">
@@ -234,73 +235,81 @@ body::after{
       <button class="fbtn" data-frame="cyber">💜 サイバー</button>
       <button class="fbtn" data-frame="none">□ なし</button>
     </div>
-
-    <div class="cam-wrap" id="camWrap">
-      <video id="videoEl" autoplay playsinline muted></video>
-      <div class="cam-corners">
-        <div class="corner tl"></div><div class="corner tr"></div>
-        <div class="corner bl"></div><div class="corner br"></div>
+    <div class="cam-outer">
+      <div class="cam-wrap" id="camWrap">
+        <video id="videoEl" autoplay playsinline muted></video>
+        <div class="cam-corners">
+          <div class="corner tl"></div><div class="corner tr"></div>
+          <div class="corner bl"></div><div class="corner br"></div>
+        </div>
+        <div class="countdown-ov" id="cdOv"></div>
+        <div class="flash-ov" id="flashOv"></div>
       </div>
-      <div class="countdown-ov" id="cdOv"></div>
-      <div class="flash-ov" id="flashOv"></div>
     </div>
-
-    <div class="thumbs" id="thumbRow">
-      <div class="tslot cur" id="t0"><span class="tnum">1</span></div>
-      <div class="tslot" id="t1"><span class="tnum">2</span></div>
-      <div class="tslot" id="t2"><span class="tnum">3</span></div>
-      <div class="tslot" id="t3"><span class="tnum">4</span></div>
-    </div>
+    <div class="thumbs" id="thumbRow"></div>
   </div>
-
   <button class="shoot-btn" id="shootBtn" onclick="startCD()"><span>📸 シャッター！（3秒後に撮影）</span></button>
   <div class="pcounter" id="pctr">0 / 4 枚 撮影済み</div>
-  <div class="nav-row"><button class="nbtn next" id="goDecoBtn" onclick="goPanel(2)" disabled>デコる ▶</button></div>
+  <div class="nav-row">
+    <button class="nbtn" onclick="goPanel(0)">◀ サイズ変更</button>
+    <button class="nbtn next" id="goDecoBtn" onclick="goPanel(2)" disabled>デコる ▶</button>
+  </div>
 </div>
 
-<!-- ===== PANEL 2 ===== -->
+<!-- ===== PANEL 2: DECO ===== -->
 <div class="panel" id="p2">
-  <div class="card cyan-border">
-    <div class="slabel">写真を選んでデコろう</div>
-    <div class="sel-label" id="selLabel">▼ 写真をタップして選択 ▼</div>
-    <div class="deco-grid" id="decoGrid"></div>
-    <div class="drag-hint">💡 デコ項目はドラッグで移動できます</div>
+  <!-- Photo nav -->
+  <div class="photo-nav">
+    <button class="pnav-btn" id="prevPhotoBtn" onclick="changeDecoPhoto(-1)">◀</button>
+    <div class="photo-dots" id="photoDots"></div>
+    <button class="pnav-btn" id="nextPhotoBtn" onclick="changeDecoPhoto(1)">▶</button>
   </div>
 
-  <div class="card cyan-border">
+  <div class="card cy">
+    <div class="deco-single">
+      <div class="deco-cv-wrap" id="decoCvWrap">
+        <canvas id="decoCanvas"></canvas>
+      </div>
+    </div>
+    <div class="drag-hint">💡 テキスト・スタンプをドラッグで移動 ／ タップで選択</div>
+    <div class="sel-item-label" id="selItemLabel"></div>
+  </div>
+
+  <div class="card cy">
     <div class="slabel">テキスト追加</div>
     <div class="tool-row">
-      <input class="ti" type="text" id="txtIn" placeholder="文字を入力...✏️" maxlength="20">
+      <input class="ti" type="text" id="txtIn" placeholder="文字を入力..." maxlength="20">
       <button class="ta-btn" onclick="addText()">追加 ✨</button>
     </div>
     <div class="tool-row">
-      <span style="font-size:.65rem;color:rgba(255,255,255,.45);flex-shrink:0">色：</span>
+      <span style="font-size:.63rem;color:rgba(255,255,255,.4);flex-shrink:0">色：</span>
       <div class="swatches" id="swatches"></div>
     </div>
     <div class="tool-row">
-      <span style="font-size:.65rem;color:rgba(255,255,255,.45);flex-shrink:0">サイズ：</span>
+      <span style="font-size:.63rem;color:rgba(255,255,255,.4);flex-shrink:0">サイズ：</span>
       <input type="range" class="fslider" id="fsz" min="12" max="64" value="28">
-      <span style="font-size:.65rem;color:var(--pk)" id="fszL">28</span>
+      <span style="font-size:.63rem;color:var(--pk)" id="fszL">28</span>
     </div>
     <div class="tool-row">
-      <span style="font-size:.65rem;color:rgba(255,255,255,.45);flex-shrink:0">フォント：</span>
+      <span style="font-size:.63rem;color:rgba(255,255,255,.4);flex-shrink:0">フォント：</span>
       <div class="font-sel-wrap" id="fontSel"></div>
     </div>
   </div>
 
-  <div class="card cyan-border">
-    <div class="slabel">オリジナルスタンプ</div>
+  <div class="card cy">
+    <div class="slabel">平成プリクラスタンプ</div>
     <div class="stamp-grid" id="stampGrid"></div>
   </div>
 
-  <div class="card cyan-border">
+  <div class="card cy">
     <div class="slabel">背景色</div>
     <div class="bg-picker" id="bgPicker"></div>
   </div>
 
-  <div class="tool-row" style="margin-top:2px">
-    <button class="clr-btn" onclick="clearSel()">この写真をリセット</button>
+  <div class="tool-row" style="margin-top:2px;padding:0 4px;">
+    <button class="clr-btn" onclick="clearCurrent()">この写真をリセット</button>
     <button class="clr-btn" onclick="undoLast()">↩ 元に戻す</button>
+    <button class="clr-btn" onclick="deleteSelectedItem()">🗑 選択削除</button>
   </div>
 
   <div class="nav-row">
@@ -309,269 +318,435 @@ body::after{
   </div>
 </div>
 
-<!-- ===== PANEL 3 ===== -->
+<!-- ===== PANEL 3: PRINT ===== -->
 <div class="panel" id="p3">
-  <div class="card yellow-border">
+  <div class="card yw">
     <div class="slabel">プリクラ 完成！</div>
     <div class="star-deco">★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</div>
     <div class="print-wrap"><canvas id="printCanvas"></canvas></div>
     <div class="act-btns">
-      <button class="abtn-p" onclick="download()">💾 ダウンロード</button>
+      <button class="abtn-p" id="dlBtn" onclick="handleDownload()">💾 ダウンロード</button>
       <button class="abtn-s" onclick="goPanel(2)">◀ もっとデコる</button>
+    </div>
+    <div class="ios-tip" id="iosTip" style="display:none">
+      📱 iOSの場合：画像を長押し → 「写真に追加」で保存できます
     </div>
   </div>
 </div>
 
 <div class="star-deco">★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</div>
-</div>
+</div><!-- /wrap -->
 
 <canvas id="capCv" style="display:none"></canvas>
+<div id="saveImgWrap" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;">
+  <div style="font-family:'DotGothic16',monospace;font-size:.7rem;color:var(--cy);letter-spacing:2px;">長押しして写真に保存してね！</div>
+  <img id="saveImg" style="max-width:90vw;max-height:70vh;border-radius:10px;box-shadow:0 0 30px rgba(255,61,154,.5);">
+  <button onclick="document.getElementById('saveImgWrap').style.display='none'" style="padding:10px 24px;border-radius:30px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font-size:.8rem;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;">閉じる</button>
+</div>
 
 <script>
-// ─────────────────────────────────────────
-//  CONSTANTS
-// ─────────────────────────────────────────
-const PW = 480, PH = 360;
-
-const COLORS = ['#FF3D9A','#FFE135','#00E5FF','#B14AED','#39FF14','#FF6B1A','#ffffff','#ff4444','#44aaff','#000000'];
-
-const FONTS = [
-  {label:'丸ゴシック', value:"'Zen Maru Gothic',sans-serif"},
-  {label:'ドット',     value:"'DotGothic16',monospace"},
-  {label:'筆文字',     value:"'Yuji Syuku',serif"},
-  {label:'レゲエ',     value:"'Reggae One',sans-serif"},
-  {label:'ポップ',     value:"'Hachi Maru Pop',sans-serif"},
-  {label:'ロック',     value:"'RocknRoll One',sans-serif"},
+// ─────────────────────────────────
+// CONSTANTS
+// ─────────────────────────────────
+const COLORS=['#FF3D9A','#FFE135','#00E5FF','#B14AED','#39FF14','#FF6B1A','#ffffff','#ff6666','#66ccff','#000000'];
+const FONTS=[
+  {label:'丸ゴシック',value:"'Zen Maru Gothic',sans-serif"},
+  {label:'ドット',value:"'DotGothic16',monospace"},
+  {label:'筆文字',value:"'Yuji Syuku',serif"},
+  {label:'レゲエ',value:"'Reggae One',sans-serif"},
+  {label:'ポップ',value:"'Hachi Maru Pop',sans-serif"},
+  {label:'ロック',value:"'RocknRoll One',sans-serif"},
 ];
+const BG_PRESETS=['#000000','#1A0033','#0D0826','#001a0d','#1a0a00','#3d0030','#00101a','#ffffff','#ffe5f0','#e5f0ff'];
 
-const BG_PRESETS = [
-  '#000000','#1A0033','#0D0826','#001a0d','#1a0a00',
-  '#3d0030','#00101a','#ffffff','#ffe5f0','#e5f0ff',
-];
-
-// ─────────────────────────────────────────
-//  ORIGINAL SVG STAMPS  (10種)
-// ─────────────────────────────────────────
-const STAMPS = [
-  // 1. 虹ハート
-  {name:'虹ハート', svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="rh" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF3D9A"/><stop offset="50%" stop-color="#FFE135"/><stop offset="100%" stop-color="#00E5FF"/></linearGradient></defs>
-    <path d="M32 54 C32 54 8 38 8 22 C8 14 14 8 22 8 C26 8 30 10 32 14 C34 10 38 8 42 8 C50 8 56 14 56 22 C56 38 32 54 32 54Z" fill="url(#rh)" stroke="white" stroke-width="1.5"/>
-    <path d="M20 22 C20 18 23 15 27 16" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
-  </svg>`},
-  // 2. クラウン
-  {name:'クラウン', svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="cr" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFE135"/><stop offset="100%" stop-color="#FF6B1A"/></linearGradient></defs>
-    <polygon points="8,48 12,24 24,38 32,14 40,38 52,24 56,48" fill="url(#cr)" stroke="#FF3D9A" stroke-width="2" stroke-linejoin="round"/>
-    <rect x="8" y="48" width="48" height="8" rx="4" fill="url(#cr)" stroke="#FF3D9A" stroke-width="2"/>
-    <circle cx="24" cy="38" r="3.5" fill="#FF3D9A"/>
-    <circle cx="32" cy="20" r="3.5" fill="#B14AED"/>
-    <circle cx="40" cy="38" r="3.5" fill="#00E5FF"/>
-  </svg>`},
-  // 3. 流れ星
-  {name:'流れ星', svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="sh" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B14AED"/><stop offset="100%" stop-color="#00E5FF"/></linearGradient></defs>
-    <polygon points="40,10 43,22 55,22 45,30 49,42 40,34 31,42 35,30 25,22 37,22" fill="#FFE135" stroke="#FF6B1A" stroke-width="1.5" stroke-linejoin="round"/>
-    <line x1="38" y1="34" x2="8" y2="54" stroke="url(#sh)" stroke-width="3" stroke-linecap="round"/>
-    <line x1="34" y1="36" x2="10" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-    <circle cx="9" cy="53" r="3" fill="white" opacity="0.7"/>
-  </svg>`},
-  // 4. サクラ
-  {name:'サクラ', svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(32,32)">
-      ${[0,72,144,216,288].map(a=>`<ellipse cx="0" cy="-16" rx="7" ry="12" fill="#FFB7D5" stroke="#FF3D9A" stroke-width="1.5" transform="rotate(${a})"/>`).join('')}
-    </g>
-    <circle cx="32" cy="32" r="7" fill="#FFE135" stroke="#FF6B1A" stroke-width="1.5"/>
-    <circle cx="32" cy="32" r="3" fill="#FF3D9A"/>
-  </svg>`},
-  // 5. 電撃
-  {name:'電撃', svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="lt" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFE135"/><stop offset="100%" stop-color="#FF6B1A"/></linearGradient></defs>
-    <polygon points="36,4 20,34 30,34 28,60 44,28 34,28" fill="url(#lt)" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-    <polygon points="36,4 20,34 30,34 28,60 44,28 34,28" fill="none" stroke="rgba(255,225,53,0.4)" stroke-width="5" stroke-linejoin="round"/>
-  </svg>`},
-  // 6. リボン
-  {name:'リボン', svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="rb" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF3D9A"/><stop offset="100%" stop-color="#B14AED"/></linearGradient></defs>
-    <path d="M32 32 L8 14 C12 20 12 32 8 36 Z" fill="url(#rb)" stroke="white" stroke-width="1"/>
-    <path d="M32 32 L56 14 C52 20 52 32 56 36 Z" fill="url(#rb)" stroke="white" stroke-width="1"/>
-    <path d="M32 32 L8 50 C12 44 12 36 8 32 Z" fill="#FF3D9A" stroke="white" stroke-width="1"/>
-    <path d="M32 32 L56 50 C52 44 52 36 56 32 Z" fill="#FF3D9A" stroke="white" stroke-width="1"/>
-    <circle cx="32" cy="32" r="6" fill="white" stroke="#FF3D9A" stroke-width="1.5"/>
-    <circle cx="32" cy="32" r="3" fill="#FF3D9A"/>
-  </svg>`},
-  // 7. 音符
-  {name:'音符', svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="mn" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00E5FF"/><stop offset="100%" stop-color="#B14AED"/></linearGradient></defs>
-    <ellipse cx="20" cy="50" rx="9" ry="7" fill="url(#mn)" transform="rotate(-20,20,50)"/>
-    <ellipse cx="44" cy="44" rx="9" ry="7" fill="url(#mn)" transform="rotate(-20,44,44)"/>
-    <line x1="28" y1="48" x2="28" y2="16" stroke="url(#mn)" stroke-width="3" stroke-linecap="round"/>
-    <line x1="52" y1="42" x2="52" y2="12" stroke="url(#mn)" stroke-width="3" stroke-linecap="round"/>
-    <line x1="28" y1="16" x2="52" y2="12" stroke="url(#mn)" stroke-width="3" stroke-linecap="round"/>
-    <line x1="28" y1="22" x2="52" y2="18" stroke="url(#mn)" stroke-width="3" stroke-linecap="round"/>
-  </svg>`},
-  // 8. 瞳
-  {name:'瞳', svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><radialGradient id="ey" cx="50%" cy="40%"><stop offset="0%" stop-color="#00E5FF"/><stop offset="40%" stop-color="#004080"/><stop offset="70%" stop-color="#000020"/><stop offset="100%" stop-color="#000000"/></radialGradient></defs>
-    <path d="M8 32 C8 32 16 12 32 12 C48 12 56 32 56 32 C56 32 48 52 32 52 C16 52 8 32 8 32Z" fill="#ffe5d0" stroke="#FF3D9A" stroke-width="1.5"/>
-    <ellipse cx="32" cy="32" rx="14" ry="14" fill="url(#ey)"/>
-    <ellipse cx="32" cy="32" rx="6" ry="6" fill="#000"/>
-    <ellipse cx="36" cy="27" rx="3" ry="3" fill="white" opacity="0.85"/>
-    <ellipse cx="30" cy="36" rx="1.5" ry="1.5" fill="white" opacity="0.5"/>
-    <path d="M8 32 C8 32 16 12 32 12 C48 12 56 32 56 32" fill="none" stroke="#FF3D9A" stroke-width="2" opacity="0.5"/>
-  </svg>`},
-  // 9. 蝶々
-  {name:'蝶々', svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+// ─────────────────────────────────
+// HEISEI PURIKURA STAMPS (10種)
+// ─────────────────────────────────
+const STAMPS=[
+  // 1. キラキラ星 (Kirakira Star) - 平成プリクラ定番
+  {name:'キラ星',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <radialGradient id="bw1" cx="30%" cy="30%"><stop offset="0%" stop-color="#FFE135"/><stop offset="100%" stop-color="#FF3D9A"/></radialGradient>
-      <radialGradient id="bw2" cx="70%" cy="30%"><stop offset="0%" stop-color="#00E5FF"/><stop offset="100%" stop-color="#B14AED"/></radialGradient>
+      <radialGradient id="ks1" cx="50%" cy="30%"><stop offset="0%" stop-color="#fffde0"/><stop offset="100%" stop-color="#FFE135"/></radialGradient>
+      <filter id="ksGlow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     </defs>
-    <path d="M32 32 C28 22 10 10 10 24 C10 36 28 36 32 32Z" fill="url(#bw1)" stroke="white" stroke-width="1"/>
-    <path d="M32 32 C36 22 54 10 54 24 C54 36 36 36 32 32Z" fill="url(#bw2)" stroke="white" stroke-width="1"/>
-    <path d="M32 32 C28 40 12 52 14 44 C16 36 28 34 32 32Z" fill="#FF3D9A" opacity="0.8" stroke="white" stroke-width="1"/>
-    <path d="M32 32 C36 40 52 52 50 44 C48 36 36 34 32 32Z" fill="#B14AED" opacity="0.8" stroke="white" stroke-width="1"/>
-    <path d="M32 16 Q30 32 32 48" stroke="#1A0033" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <line x1="30" y1="17" x2="20" y2="10" stroke="#1A0033" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="32" y1="16" x2="34" y2="8" stroke="#1A0033" stroke-width="1.5" stroke-linecap="round"/>
-    <circle cx="20" cy="10" r="2" fill="#FF3D9A"/>
-    <circle cx="34" cy="8" r="2" fill="#FF3D9A"/>
+    <polygon points="32,4 36,26 58,26 41,39 48,60 32,47 16,60 23,39 6,26 28,26" fill="url(#ks1)" filter="url(#ksGlow)" stroke="#FF6B1A" stroke-width="1"/>
+    <polygon points="32,12 35,26 48,26 38,34 42,46 32,39 22,46 26,34 16,26 29,26" fill="white" opacity=".5"/>
+    <!-- corner sparkles -->
+    <line x1="4" y1="4" x2="4" y2="12" stroke="#FFE135" stroke-width="2" stroke-linecap="round"/>
+    <line x1="0" y1="8" x2="8" y2="8" stroke="#FFE135" stroke-width="2" stroke-linecap="round"/>
+    <line x1="56" y1="52" x2="56" y2="60" stroke="#FF3D9A" stroke-width="2" stroke-linecap="round"/>
+    <line x1="52" y1="56" x2="60" y2="56" stroke="#FF3D9A" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="58" cy="10" r="2.5" fill="#00E5FF"/>
+    <circle cx="6" cy="56" r="2.5" fill="#B14AED"/>
   </svg>`},
-  // 10. 魔法の杖
-  {name:'魔法杖', svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="wd" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFE135"/><stop offset="100%" stop-color="#B14AED"/></linearGradient></defs>
-    <line x1="14" y1="50" x2="50" y2="14" stroke="url(#wd)" stroke-width="4" stroke-linecap="round"/>
-    <polygon points="50,8 53,17 62,14 55,21 58,30 50,24 42,30 45,21 38,14 47,17" fill="#FFE135" stroke="#FF6B1A" stroke-width="1.5" stroke-linejoin="round"/>
-    <circle cx="16" cy="50" r="5" fill="#B14AED" stroke="white" stroke-width="1.5"/>
-    <circle cx="22" cy="42" r="2" fill="#FF3D9A" opacity="0.7"/>
-    <circle cx="32" cy="28" r="2" fill="#00E5FF" opacity="0.7"/>
-    <circle cx="10" cy="44" r="1.5" fill="#FFE135" opacity="0.7"/>
-    <circle cx="28" cy="58" r="1.5" fill="#FF3D9A" opacity="0.7"/>
+
+  // 2. ハートバブル (Heart Bubble) - 吹き出しハート
+  {name:'ハート泡',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="hb1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF88CC"/><stop offset="100%" stop-color="#FF3D9A"/></linearGradient></defs>
+    <!-- bubble -->
+    <ellipse cx="32" cy="28" rx="26" ry="22" fill="url(#hb1)" opacity=".15" stroke="#FF3D9A" stroke-width="2"/>
+    <!-- heart inside -->
+    <path d="M32 36 C32 36 18 27 18 19 C18 14 22 11 27 12 C29 12.5 31 14 32 16 C33 14 35 12.5 37 12 C42 11 46 14 46 19 C46 27 32 36 32 36Z" fill="url(#hb1)" stroke="white" stroke-width="1.2"/>
+    <path d="M24 18 C24 15.5 26 13.5 29 14" stroke="rgba(255,255,255,.7)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- tail -->
+    <path d="M20 46 L16 56 L26 50" fill="url(#hb1)" stroke="#FF3D9A" stroke-width="1.2" stroke-linejoin="round"/>
+    <!-- small hearts -->
+    <text x="50" y="14" font-size="8" fill="#FF3D9A" opacity=".8">♡</text>
+    <text x="4" y="18" font-size="6" fill="#FF88CC" opacity=".8">♡</text>
+  </svg>`},
+
+  // 3. 虹アーチ (Rainbow Arch) - 平成カラフル
+  {name:'にじ',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><filter id="raShadow"><feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="rgba(0,0,0,.3)"/></filter></defs>
+    <!-- Rainbow stripes -->
+    <path d="M6 52 Q32 4 58 52" fill="none" stroke="#FF0000" stroke-width="5" stroke-linecap="round" filter="url(#raShadow)"/>
+    <path d="M10 52 Q32 10 54 52" fill="none" stroke="#FF7700" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M14 52 Q32 16 50 52" fill="none" stroke="#FFEE00" stroke-width="4" stroke-linecap="round"/>
+    <path d="M18 52 Q32 22 46 52" fill="none" stroke="#00CC44" stroke-width="4" stroke-linecap="round"/>
+    <path d="M22 52 Q32 28 42 52" fill="none" stroke="#0088FF" stroke-width="4" stroke-linecap="round"/>
+    <path d="M26 52 Q32 34 38 52" fill="none" stroke="#8800FF" stroke-width="4" stroke-linecap="round"/>
+    <!-- clouds at base -->
+    <ellipse cx="12" cy="52" rx="8" ry="5" fill="white" opacity=".9"/>
+    <ellipse cx="8" cy="50" rx="5" ry="4" fill="white" opacity=".9"/>
+    <ellipse cx="52" cy="52" rx="8" ry="5" fill="white" opacity=".9"/>
+    <ellipse cx="56" cy="50" rx="5" ry="4" fill="white" opacity=".9"/>
+    <!-- stars -->
+    <text x="1" y="12" font-size="8" fill="#FFE135">★</text>
+    <text x="52" y="16" font-size="7" fill="#FF3D9A">★</text>
+  </svg>`},
+
+  // 4. クマちゃん (Bear Face) - 平成プリクラ定番キャラ風
+  {name:'クマ',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><radialGradient id="bf1" cx="40%" cy="30%"><stop offset="0%" stop-color="#f4c98e"/><stop offset="100%" stop-color="#d4934a"/></radialGradient></defs>
+    <!-- ears -->
+    <circle cx="16" cy="17" r="10" fill="url(#bf1)"/>
+    <circle cx="48" cy="17" r="10" fill="url(#bf1)"/>
+    <circle cx="16" cy="17" r="6" fill="#e8a070"/>
+    <circle cx="48" cy="17" r="6" fill="#e8a070"/>
+    <!-- face -->
+    <circle cx="32" cy="36" r="22" fill="url(#bf1)"/>
+    <circle cx="36" cy="30" r="11" fill="rgba(255,255,255,.12)"/>
+    <!-- eyes -->
+    <ellipse cx="24" cy="30" rx="4" ry="4.5" fill="#1a0010"/>
+    <ellipse cx="40" cy="30" rx="4" ry="4.5" fill="#1a0010"/>
+    <circle cx="25.5" cy="28.5" r="1.5" fill="white"/>
+    <circle cx="41.5" cy="28.5" r="1.5" fill="white"/>
+    <!-- nose/mouth -->
+    <ellipse cx="32" cy="38" rx="5" ry="3.5" fill="#c06040"/>
+    <path d="M27 41 Q32 46 37 41" fill="none" stroke="#1a0010" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- cheeks -->
+    <ellipse cx="18" cy="40" rx="6" ry="4" fill="#FF88CC" opacity=".55"/>
+    <ellipse cx="46" cy="40" rx="6" ry="4" fill="#FF88CC" opacity=".55"/>
+    <!-- ribbon on ear -->
+    <path d="M45 9 L48 13 L51 9 L48 7 Z" fill="#FF3D9A"/>
+    <circle cx="48" cy="11" r="1.5" fill="white"/>
+  </svg>`},
+
+  // 5. 流れ星＋軌跡 (Shooting Star Trail)
+  {name:'流れ星',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="ss1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B14AED"/><stop offset="100%" stop-color="transparent"/></linearGradient>
+      <linearGradient id="ss2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00E5FF"/><stop offset="100%" stop-color="transparent"/></linearGradient>
+    </defs>
+    <!-- trails -->
+    <path d="M8 56 L44 20" stroke="url(#ss1)" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <path d="M12 60 L46 24" stroke="url(#ss2)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+    <!-- star -->
+    <polygon points="46,10 49,20 59,20 51,26 54,36 46,30 38,36 41,26 33,20 43,20" fill="#FFE135" stroke="#FF6B1A" stroke-width="1.2" stroke-linejoin="round"/>
+    <polygon points="46,14 48.5,21 55,21 50,25 52,31 46,27 40,31 42,25 37,21 43.5,21" fill="white" opacity=".5"/>
+    <!-- sparkles on trail -->
+    <line x1="20" y1="48" x2="20" y2="54" stroke="#FFE135" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="17" y1="51" x2="23" y2="51" stroke="#FFE135" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="30" y1="38" x2="30" y2="42" stroke="#FF3D9A" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="28" y1="40" x2="32" y2="40" stroke="#FF3D9A" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`},
+
+  // 6. りぼん＆ハート (Ribbon & Heart) - 平成乙女スタンプ
+  {name:'リボン♡',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="rh2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF3D9A"/><stop offset="100%" stop-color="#B14AED"/></linearGradient>
+      <linearGradient id="rh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF88CC"/><stop offset="100%" stop-color="#FF3D9A"/></linearGradient>
+    </defs>
+    <!-- ribbon left wings -->
+    <path d="M32 24 L6 10 Q14 18 14 26 Q14 32 6 36 L32 28 Z" fill="url(#rh2)"/>
+    <path d="M32 24 L58 10 Q50 18 50 26 Q50 32 58 36 L32 28 Z" fill="url(#rh2)"/>
+    <!-- ribbon knot -->
+    <ellipse cx="32" cy="26" rx="7" ry="6" fill="url(#rh3)" stroke="white" stroke-width="1.5"/>
+    <!-- heart below -->
+    <path d="M32 46 C32 46 20 38 20 31 C20 27 23 24 27 25 C29 25.5 31 27 32 29 C33 27 35 25.5 37 25 C41 24 44 27 44 31 C44 38 32 46 32 46Z" fill="url(#rh3)" stroke="white" stroke-width="1.2"/>
+    <path d="M24 30 C24 27.5 26.5 25.5 29 26" stroke="rgba(255,255,255,.7)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <!-- decorative dots -->
+    <circle cx="10" cy="8" r="2.5" fill="#FFE135"/>
+    <circle cx="54" cy="8" r="2.5" fill="#FFE135"/>
+    <circle cx="10" cy="48" r="2" fill="#FF3D9A"/>
+    <circle cx="54" cy="48" r="2" fill="#FF3D9A"/>
+  </svg>`},
+
+  // 7. 電話＆ハート (Phone & Heart) - 平成の「電話して♡」
+  {name:'てる',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="ph1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B14AED"/><stop offset="100%" stop-color="#00E5FF"/></linearGradient></defs>
+    <!-- phone body -->
+    <rect x="18" y="8" width="28" height="44" rx="6" fill="url(#ph1)" stroke="white" stroke-width="1.5"/>
+    <rect x="22" y="14" width="20" height="26" rx="3" fill="white" opacity=".15"/>
+    <rect x="22" y="14" width="20" height="26" rx="3" fill="none" stroke="white" stroke-width="1" opacity=".5"/>
+    <!-- screen content: heart -->
+    <path d="M32 30 C32 30 24 24 24 19 C24 16 26 14 29 15 C30.5 15.5 31.5 16.5 32 18 C32.5 16.5 33.5 15.5 35 15 C38 14 40 16 40 19 C40 24 32 30 32 30Z" fill="#FF3D9A"/>
+    <!-- home button -->
+    <circle cx="32" cy="46" r="3" fill="white" opacity=".5" stroke="white" stroke-width="1"/>
+    <!-- speaker -->
+    <rect x="27" y="10" width="10" height="2" rx="1" fill="white" opacity=".4"/>
+    <!-- floating hearts -->
+    <text x="44" y="18" font-size="9" fill="#FF3D9A" opacity=".9">♡</text>
+    <text x="46" y="30" font-size="7" fill="#FFE135" opacity=".7">♡</text>
+    <text x="8" y="22" font-size="8" fill="#FF88CC" opacity=".8">♡</text>
+  </svg>`},
+
+  // 8. お花＆葉っぱ (Flower & Leaves) - ナチュラル系プリクラ
+  {name:'おはな',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="fl1" cx="50%" cy="30%"><stop offset="0%" stop-color="#fffde0"/><stop offset="100%" stop-color="#FFE135"/></radialGradient>
+      <radialGradient id="fl2"><stop offset="0%" stop-color="#FF88CC"/><stop offset="100%" stop-color="#FF3D9A"/></radialGradient>
+    </defs>
+    <!-- leaves -->
+    <ellipse cx="14" cy="46" rx="10" ry="6" fill="#39FF14" opacity=".8" transform="rotate(-30,14,46)"/>
+    <ellipse cx="50" cy="46" rx="10" ry="6" fill="#39FF14" opacity=".8" transform="rotate(30,50,46)"/>
+    <ellipse cx="10" cy="34" rx="8" ry="5" fill="#2ecc40" opacity=".7" transform="rotate(-50,10,34)"/>
+    <!-- petals -->
+    <ellipse cx="32" cy="18" rx="7" ry="12" fill="url(#fl2)" opacity=".9"/>
+    <ellipse cx="32" cy="18" rx="7" ry="12" fill="url(#fl2)" opacity=".9" transform="rotate(45,32,32)"/>
+    <ellipse cx="32" cy="18" rx="7" ry="12" fill="url(#fl2)" opacity=".9" transform="rotate(90,32,32)"/>
+    <ellipse cx="32" cy="18" rx="7" ry="12" fill="url(#fl2)" opacity=".9" transform="rotate(135,32,32)"/>
+    <!-- center -->
+    <circle cx="32" cy="32" r="9" fill="url(#fl1)"/>
+    <circle cx="32" cy="32" r="5" fill="#FF6B1A" opacity=".7"/>
+    <circle cx="34" cy="30" r="2" fill="white" opacity=".6"/>
+    <!-- small buds -->
+    <circle cx="52" cy="20" r="5" fill="#FF88CC" stroke="white" stroke-width="1"/>
+    <circle cx="13" cy="18" r="4" fill="#FFE135" stroke="white" stroke-width="1"/>
+  </svg>`},
+
+  // 9. 魔法少女ステッキ (Mahou Shoujo Stick)
+  {name:'魔法☆',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="mg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFE135"/><stop offset="100%" stop-color="#B14AED"/></linearGradient>
+      <linearGradient id="mg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF3D9A"/><stop offset="100%" stop-color="#B14AED"/></linearGradient>
+      <filter id="mgGlow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <!-- stick -->
+    <line x1="16" y1="54" x2="48" y2="18" stroke="url(#mg1)" stroke-width="4" stroke-linecap="round"/>
+    <line x1="16" y1="54" x2="48" y2="18" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round"/>
+    <!-- star top -->
+    <polygon points="48,4 51,14 61,14 53,20 56,30 48,24 40,30 43,20 35,14 45,14" fill="#FFE135" stroke="#FF6B1A" stroke-width="1.2" stroke-linejoin="round" filter="url(#mgGlow)"/>
+    <polygon points="48,8 50.5,15 58,15 52,19 54.5,26 48,22 41.5,26 44,19 38,15 45.5,15" fill="white" opacity=".45"/>
+    <!-- heart gem on stick -->
+    <path d="M26 38 C26 38 19 33 19 28.5 C19 26 21 24 24 25 C25 25.3 25.7 26 26 27 C26.3 26 27 25.3 28 25 C31 24 33 26 33 28.5 C33 33 26 38 26 38Z" fill="url(#mg2)" stroke="white" stroke-width="1" filter="url(#mgGlow)"/>
+    <!-- wand ball -->
+    <circle cx="16" cy="54" r="5" fill="url(#mg2)" stroke="white" stroke-width="1.5" filter="url(#mgGlow)"/>
+    <circle cx="17.5" cy="52.5" r="1.8" fill="white" opacity=".6"/>
+    <!-- sparkles -->
+    <line x1="6" y1="30" x2="6" y2="38" stroke="#FFE135" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="2" y1="34" x2="10" y2="34" stroke="#FFE135" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="56" y1="40" x2="56" y2="46" stroke="#FF3D9A" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="53" y1="43" x2="59" y2="43" stroke="#FF3D9A" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="10" cy="16" r="2.5" fill="#00E5FF"/>
+    <circle cx="58" cy="52" r="2" fill="#FFE135"/>
+  </svg>`},
+
+  // 10. ギャル文字フレーム (Gyaru Text Frame) - "LOVE"
+  {name:'LOVE★',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="lv1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF3D9A"/><stop offset="50%" stop-color="#FFE135"/><stop offset="100%" stop-color="#00E5FF"/></linearGradient>
+    </defs>
+    <!-- outer star burst frame -->
+    <polygon points="32,2 35,12 44,6 40,16 52,14 46,23 58,26 49,31 56,42 45,38 46,51 37,44 32,56 27,44 18,51 19,38 8,42 15,31 6,26 18,23 14,14 26,16 24,6 33,12" fill="#FF3D9A" opacity=".18"/>
+    <!-- inner circle bg -->
+    <circle cx="32" cy="32" r="20" fill="url(#lv1)" opacity=".12" stroke="url(#lv1)" stroke-width="1.5"/>
+    <!-- LOVE text -->
+    <text x="32" y="29" font-family="'Reggae One',sans-serif" font-size="11" font-weight="900" fill="url(#lv1)" text-anchor="middle" stroke="rgba(0,0,0,.3)" stroke-width="0.5">LOVE</text>
+    <!-- heart -->
+    <path d="M32 40 C32 40 25 35 25 30.5 C25 28 27 26 30 27 C31 27.3 31.5 28 32 29 C32.5 28 33 27.3 34 27 C37 26 39 28 39 30.5 C39 35 32 40 32 40Z" fill="url(#lv1)"/>
+    <!-- corner stars -->
+    <text x="3" y="14" font-size="9" fill="#FFE135">★</text>
+    <text x="50" y="14" font-size="9" fill="#FF3D9A">★</text>
+    <text x="3" y="58" font-size="9" fill="#00E5FF">★</text>
+    <text x="50" y="58" font-size="9" fill="#B14AED">★</text>
+    <!-- dots -->
+    <circle cx="32" cy="6" r="2" fill="#FF3D9A"/>
+    <circle cx="32" cy="58" r="2" fill="#FFE135"/>
+    <circle cx="6" cy="32" r="2" fill="#00E5FF"/>
+    <circle cx="58" cy="32" r="2" fill="#B14AED"/>
   </svg>`},
 ];
 
-// ─────────────────────────────────────────
-//  STATE
-// ─────────────────────────────────────────
-const ST = {
-  currentPanel: 1,
-  frame: 'heart',
-  photosTaken: 0,
-  photos: [null,null,null,null],
-  decoData: [[],[],[],[]],   // {type,text/svgIdx,x,y,color,size,font,w,h}
-  bgColors: ['#000000','#000000','#000000','#000000'],
-  selPhoto: 0,
-  textColor: '#FF3D9A',
-  fontSize: 28,
-  fontVal: FONTS[0].value,
-  stream: null,
-  shooting: false,
-  // drag
-  dragging: null,
-  dragOffX: 0, dragOffY: 0,
+// ─────────────────────────────────
+// STATE
+// ─────────────────────────────────
+const ST={
+  panel:0,
+  PW:360,PH:360,          // photo dimensions (set by size picker)
+  frame:'heart',
+  photosTaken:0,
+  photos:[null,null,null,null],
+  decoData:[[],[],[],[]],   // {type,text/svgIdx,x,y,color,size,font,w,h,imgEl}
+  bgColors:['#000000','#000000','#000000','#000000'],
+  curPhoto:0,             // which photo in deco panel
+  textColor:'#FF3D9A',
+  fontSize:28,
+  fontVal:FONTS[0].value,
+  stream:null,
+  shooting:false,
+  selItem:null,           // {photoIdx, itemIdx} currently selected deco item
+  dragging:null,
+  dragOffX:0,dragOffY:0,
+  isIOS:false,
 };
 
-// ─────────────────────────────────────────
-//  FRAME DRAW
-// ─────────────────────────────────────────
+// ─────────────────────────────────
+// DETECT iOS
+// ─────────────────────────────────
+ST.isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||
+  (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+
+// ─────────────────────────────────
+// SIZE SELECTOR
+// ─────────────────────────────────
+document.getElementById('sizeGrid').addEventListener('click',e=>{
+  const card=e.target.closest('.size-card'); if(!card) return;
+  document.querySelectorAll('.size-card').forEach(c=>c.classList.remove('sel'));
+  card.classList.add('sel');
+  ST.PW=parseInt(card.dataset.w);
+  ST.PH=parseInt(card.dataset.h);
+});
+
+// ─────────────────────────────────
+// FRAME DRAW
+// ─────────────────────────────────
 function drawFrame(ctx,w,h,fr){
   if(fr==='none') return;
   ctx.save();
   if(fr==='heart'){
-    ctx.strokeStyle='#FF3D9A'; ctx.lineWidth=14;
-    ctx.shadowColor='#FF3D9A'; ctx.shadowBlur=10;
-    ctx.strokeRect(7,7,w-14,h-14);
+    ctx.strokeStyle='#FF3D9A';ctx.lineWidth=Math.floor(h*.038);
+    ctx.shadowColor='#FF3D9A';ctx.shadowBlur=10;
+    const lw=ctx.lineWidth/2;
+    ctx.strokeRect(lw,lw,w-lw*2,h-lw*2);
     ctx.shadowBlur=0;
-    const fs=Math.floor(w*.07);
+    const fs=Math.floor(Math.min(w,h)*.07);
     ctx.font=`${fs}px serif`;
-    [[10,10],[w-22,10],[10,h-22],[w-22,h-22],[w/2-8,6],[w/2-8,h-20]].forEach(([x,y])=>ctx.fillText('💗',x,y+14));
+    const p=fs*.3;
+    [[p,p],[w-fs-p,p],[p,h-fs-p],[w-fs-p,h-fs-p],[w/2-fs/2,p],[w/2-fs/2,h-fs-p]].forEach(([x,y])=>ctx.fillText('💗',x,y+fs));
   } else if(fr==='star'){
-    ctx.strokeStyle='#FFE135'; ctx.lineWidth=12;
-    ctx.shadowColor='#FFE135'; ctx.shadowBlur=14;
-    ctx.strokeRect(6,6,w-12,h-12);
+    ctx.strokeStyle='#FFE135';ctx.lineWidth=Math.floor(h*.033);
+    ctx.shadowColor='#FFE135';ctx.shadowBlur=14;
+    const lw=ctx.lineWidth/2;
+    ctx.strokeRect(lw,lw,w-lw*2,h-lw*2);
     ctx.shadowBlur=0;
-    ctx.font=`${Math.floor(w*.065)}px serif`;
-    [[8,8],[w/2-8,4],[w-22,8],[4,h/2-8],[w-20,h/2-8],[8,h-22],[w/2-8,h-20],[w-22,h-22]].forEach(([x,y])=>ctx.fillText('⭐',x,y+14));
+    const fs=Math.floor(Math.min(w,h)*.065);
+    ctx.font=`${fs}px serif`;
+    [[4,4],[w/2-fs/2,4],[w-fs-4,4],[4,h/2-fs/2],[w-fs-4,h/2-fs/2],[4,h-fs-4],[w/2-fs/2,h-fs-4],[w-fs-4,h-fs-4]].forEach(([x,y])=>ctx.fillText('⭐',x,y+fs));
   } else if(fr==='flower'){
     const g=ctx.createLinearGradient(0,0,w,h);
-    g.addColorStop(0,'#FF3D9A'); g.addColorStop(.5,'#FFE135'); g.addColorStop(1,'#B14AED');
-    ctx.strokeStyle=g; ctx.lineWidth=13;
-    ctx.strokeRect(6,6,w-12,h-12);
-    ctx.font=`${Math.floor(w*.065)}px serif`;
-    [[8,8],[w/3,4],[2*w/3,4],[w-22,8],[4,h/3],[4,2*h/3],[w-20,h/3],[w-20,2*h/3],[8,h-22],[w/3,h-20],[2*w/3,h-20],[w-22,h-22]].forEach(([x,y])=>ctx.fillText('🌸',x,y+14));
+    g.addColorStop(0,'#FF3D9A');g.addColorStop(.5,'#FFE135');g.addColorStop(1,'#B14AED');
+    ctx.strokeStyle=g;ctx.lineWidth=Math.floor(h*.035);
+    const lw=ctx.lineWidth/2;ctx.strokeRect(lw,lw,w-lw*2,h-lw*2);
+    const fs=Math.floor(Math.min(w,h)*.065);ctx.font=`${fs}px serif`;
+    [[4,4],[w/3,4],[2*w/3,4],[w-fs-4,4],[4,h/3],[4,2*h/3],[w-fs-4,h/3],[w-fs-4,2*h/3],[4,h-fs-4],[w/3,h-fs-4],[2*w/3,h-fs-4],[w-fs-4,h-fs-4]].forEach(([x,y])=>ctx.fillText('🌸',x,y+fs));
   } else if(fr==='rainbow'){
     ['#FF0000','#FF7700','#FFEE00','#00CC00','#0088FF','#8800FF'].forEach((c,i)=>{
-      ctx.strokeStyle=c; ctx.lineWidth=3;
-      ctx.strokeRect(4+i*3,4+i*3,w-(8+i*6),h-(8+i*6));
+      ctx.strokeStyle=c;ctx.lineWidth=3;ctx.strokeRect(4+i*3,4+i*3,w-(8+i*6),h-(8+i*6));
     });
-    ctx.font=`${Math.floor(w*.08)}px serif`;
-    ctx.fillText('🌈',6,h-6); ctx.fillText('🌈',w-30,22);
+    const fs=Math.floor(Math.min(w,h)*.08);ctx.font=`${fs}px serif`;
+    ctx.fillText('🌈',6,h-6);ctx.fillText('🌈',w-fs-6,fs+4);
   } else if(fr==='cyber'){
-    ctx.strokeStyle='#00E5FF'; ctx.lineWidth=10;
-    ctx.shadowColor='#00E5FF'; ctx.shadowBlur=20;
-    ctx.strokeRect(5,5,w-10,h-10);
-    ctx.shadowBlur=0;
-    ctx.strokeStyle='#B14AED'; ctx.lineWidth=3;
-    ctx.setLineDash([8,4]);
-    ctx.strokeRect(12,12,w-24,h-24);
-    ctx.setLineDash([]);
-    ctx.fillStyle='#00E5FF'; ctx.shadowColor='#00E5FF'; ctx.shadowBlur=10;
+    ctx.strokeStyle='#00E5FF';ctx.lineWidth=Math.floor(h*.028);
+    ctx.shadowColor='#00E5FF';ctx.shadowBlur=20;
+    const lw=ctx.lineWidth/2;ctx.strokeRect(lw,lw,w-lw*2,h-lw*2);
+    ctx.shadowBlur=0;ctx.strokeStyle='#B14AED';ctx.lineWidth=2.5;
+    ctx.setLineDash([8,4]);ctx.strokeRect(14,14,w-28,h-28);ctx.setLineDash([]);
+    ctx.fillStyle='#00E5FF';ctx.shadowColor='#00E5FF';ctx.shadowBlur=10;
+    const cs=22;
     [[0,0,1,1],[w,0,-1,1],[0,h,1,-1],[w,h,-1,-1]].forEach(([ox,oy,sx,sy])=>{
-      ctx.beginPath(); ctx.moveTo(ox,oy);
-      ctx.lineTo(ox+sx*22,oy); ctx.lineTo(ox,oy+sy*22);
-      ctx.closePath(); ctx.fill();
+      ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+sx*cs,oy);ctx.lineTo(ox,oy+sy*cs);ctx.closePath();ctx.fill();
     });
   }
   ctx.restore();
 }
 
-// ─────────────────────────────────────────
-//  CAMERA
-// ─────────────────────────────────────────
+// ─────────────────────────────────
+// CAMERA
+// ─────────────────────────────────
+function setCamSize(){
+  const cw=document.getElementById('camWrap');
+  const maxW=Math.min(320,window.innerWidth-60);
+  const ratio=ST.PH/ST.PW;
+  cw.style.width=maxW+'px';
+  cw.style.height=(maxW*ratio)+'px';
+  // thumb size
+  document.querySelectorAll('.tslot').forEach(t=>{
+    const tw=Math.floor(maxW/4-6);
+    t.style.width=tw+'px';
+    t.style.height=Math.floor(tw*ratio)+'px';
+  });
+}
+
 async function initCam(){
+  buildThumbs();
+  setCamSize();
   try{
-    const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:480}},audio:false});
-    ST.stream=s; document.getElementById('videoEl').srcObject=s;
-  } catch(e){
-    document.getElementById('camWrap').innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:10px;color:rgba(255,255,255,.5);font-size:.8rem;padding:20px;text-align:center"><span style="font-size:2rem">📷</span>カメラへのアクセスが必要です。<br>ブラウザの設定でカメラを許可してください。<br><small style="opacity:.5">${e.message}</small></div>`;
+    const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:960}},audio:false});
+    ST.stream=s;document.getElementById('videoEl').srcObject=s;
+  }catch(e){
+    document.getElementById('camWrap').innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:10px;color:rgba(255,255,255,.5);font-size:.8rem;padding:16px;text-align:center"><span style="font-size:2rem">📷</span>カメラへのアクセスが必要です。<br>ブラウザの設定でカメラを許可してください。<br><small style="opacity:.5">${e.message}</small></div>`;
+  }
+}
+
+function buildThumbs(){
+  const row=document.getElementById('thumbRow');row.innerHTML='';
+  for(let i=0;i<4;i++){
+    const d=document.createElement('div');
+    d.className='tslot'+(i===0?' cur':'');
+    d.id=`t${i}`;
+    d.innerHTML=`<span class="tnum">${i+1}</span>`;
+    row.appendChild(d);
   }
 }
 
 document.getElementById('framePicker').addEventListener('click',e=>{
-  const b=e.target.closest('.fbtn'); if(!b) return;
+  const b=e.target.closest('.fbtn');if(!b)return;
   document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('sel'));
-  b.classList.add('sel'); ST.frame=b.dataset.frame;
+  b.classList.add('sel');ST.frame=b.dataset.frame;
 });
 
 function startCD(){
-  if(ST.shooting||ST.photosTaken>=4) return;
+  if(ST.shooting||ST.photosTaken>=4)return;
   ST.shooting=true;
   document.getElementById('shootBtn').disabled=true;
   const cd=document.getElementById('cdOv');
-  cd.style.opacity='1'; let c=3; cd.textContent=c;
-  const t=setInterval(()=>{
-    c--;
-    if(c>0){cd.textContent=c;}
-    else{clearInterval(t); cd.textContent='📸'; capturePhoto();}
-  },1000);
+  cd.style.opacity='1';let c=3;cd.textContent=c;
+  const t=setInterval(()=>{c--;if(c>0){cd.textContent=c;}else{clearInterval(t);cd.textContent='📸';capturePhoto();}},1000);
 }
 
 function capturePhoto(){
   const v=document.getElementById('videoEl');
-  const fov=document.getElementById('flashOv');
-  const cov=document.getElementById('cdOv');
+  const fo=document.getElementById('flashOv');
+  const co=document.getElementById('cdOv');
   const cv=document.getElementById('capCv');
   const ctx=cv.getContext('2d');
-  cv.width=PW; cv.height=PH;
-  ctx.save(); ctx.translate(PW,0); ctx.scale(-1,1);
-  ctx.drawImage(v,0,0,PW,PH);
+  cv.width=ST.PW;cv.height=ST.PH;
+  // center-crop from video
+  const vr=v.videoWidth/v.videoHeight;
+  const pr=ST.PW/ST.PH;
+  let sx=0,sy=0,sw=v.videoWidth,sh=v.videoHeight;
+  if(vr>pr){sw=Math.round(sh*pr);sx=(v.videoWidth-sw)/2;}
+  else{sh=Math.round(sw/pr);sy=(v.videoHeight-sh)/2;}
+  ctx.save();ctx.translate(ST.PW,0);ctx.scale(-1,1);
+  ctx.drawImage(v,sx,sy,sw,sh,0,0,ST.PW,ST.PH);
   ctx.restore();
-  drawFrame(ctx,PW,PH,ST.frame);
+  drawFrame(ctx,ST.PW,ST.PH,ST.frame);
   const url=cv.toDataURL('image/png');
   const idx=ST.photosTaken;
-  ST.photos[idx]=url; ST.photosTaken++;
-  fov.style.opacity='1';
-  setTimeout(()=>fov.style.opacity='0',120);
-  setTimeout(()=>{cov.style.opacity='0'; cov.textContent='';},350);
+  ST.photos[idx]=url;ST.photosTaken++;
+  fo.style.opacity='1';setTimeout(()=>fo.style.opacity='0',120);
+  setTimeout(()=>{co.style.opacity='0';co.textContent='';},350);
   updateThumb(idx,url);
   document.getElementById('pctr').textContent=`${ST.photosTaken} / 4 枚 撮影済み`;
   ST.shooting=false;
@@ -582,220 +757,357 @@ function capturePhoto(){
 
 function updateThumb(idx,url){
   const el=document.getElementById(`t${idx}`);
-  el.classList.remove('cur'); el.classList.add('done');
+  el.classList.remove('cur');el.classList.add('done');
   el.innerHTML=`<img src="${url}"><span class="tnum">${idx+1}</span>`;
   const nx=document.getElementById(`t${idx+1}`);
-  if(nx) nx.classList.add('cur');
+  if(nx)nx.classList.add('cur');
 }
 
-// ─────────────────────────────────────────
-//  PANEL NAV
-// ─────────────────────────────────────────
+// ─────────────────────────────────
+// PANEL NAV
+// ─────────────────────────────────
 function goPanel(n){
-  ST.currentPanel=n;
-  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i+1===n));
-  ['s1','s2','s3'].forEach((id,i)=>{
+  // leaving panel 1: re-init cam for new size if needed
+  if(n===1&&ST.panel===0){initCam();}
+  ST.panel=n;
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===n));
+  ['s0','s1','s2','s3'].forEach((id,i)=>{
     const el=document.getElementById(id);
-    el.classList.toggle('active',i+1===n);
-    el.classList.toggle('done',i+1<n);
+    el.classList.toggle('active',i===n);
+    el.classList.toggle('done',i<n);
   });
-  if(n===2) initDecoPanel();
-  if(n===3) renderPrint();
+  if(n===2)initDecoPanel();
+  if(n===3)renderPrint();
 }
 
-// ─────────────────────────────────────────
-//  DECO PANEL
-// ─────────────────────────────────────────
+// ─────────────────────────────────
+// DECO PANEL
+// ─────────────────────────────────
 function initDecoPanel(){
-  const grid=document.getElementById('decoGrid');
-  grid.innerHTML='';
-  for(let i=0;i<4;i++){
-    const wrap=document.createElement('div');
-    wrap.className='dpwrap'; wrap.id=`dw${i}`;
-    const cv=document.createElement('canvas');
-    cv.id=`dc${i}`; cv.width=PW; cv.height=PH;
-    const hint=document.createElement('div');
-    hint.className='dphint'; hint.textContent=`写真 ${i+1}`;
-    wrap.appendChild(cv); wrap.appendChild(hint);
-    wrap.addEventListener('click',()=>selPhoto(i));
-    grid.appendChild(wrap);
-    renderDeco(i);
-  }
-  selPhoto(0);
-  setupDrag();
+  ST.curPhoto=0;ST.selItem=null;
+  buildPhotoDots();
+  setupDecoCanvas();
+  renderDecoCv();
 }
 
-function renderDeco(idx){
-  const cv=document.getElementById(`dc${idx}`); if(!cv) return;
+function buildPhotoDots(){
+  const c=document.getElementById('photoDots');c.innerHTML='';
+  for(let i=0;i<4;i++){
+    const d=document.createElement('div');
+    d.className='pdot'+(i===0?' active':'')+(ST.photos[i]?' done':'');
+    d.id=`pd${i}`;d.textContent=i+1;
+    d.addEventListener('click',()=>switchDecoPhoto(i));
+    c.appendChild(d);
+  }
+  updatePhotoNav();
+}
+
+function updatePhotoNav(){
+  document.getElementById('prevPhotoBtn').disabled=ST.curPhoto===0;
+  document.getElementById('nextPhotoBtn').disabled=ST.curPhoto===3;
+  document.querySelectorAll('.pdot').forEach((d,i)=>{
+    d.classList.toggle('active',i===ST.curPhoto);
+  });
+}
+
+function changeDecoPhoto(dir){
+  const n=ST.curPhoto+dir;
+  if(n<0||n>3)return;
+  switchDecoPhoto(n);
+}
+
+function switchDecoPhoto(idx){
+  ST.curPhoto=idx;ST.selItem=null;
+  updatePhotoNav();
+  renderDecoCv();
+  document.getElementById('selItemLabel').textContent='';
+}
+
+// ─────────────────────────────────
+// DECO CANVAS
+// ─────────────────────────────────
+function setupDecoCanvas(){
+  const wrap=document.getElementById('decoCvWrap');
+  const cv=document.getElementById('decoCanvas');
+  const maxW=Math.min(400,window.innerWidth-44);
+  const scale=maxW/ST.PW;
+  const dispH=Math.round(ST.PH*scale);
+  wrap.style.width=maxW+'px';
+  wrap.style.height=dispH+'px';
+  cv.width=ST.PW;cv.height=ST.PH;
+  cv.style.width=maxW+'px';cv.style.height=dispH+'px';
+
+  // remove old listeners by replacing element
+  const newCv=cv.cloneNode(false);
+  newCv.id='decoCanvas';newCv.width=ST.PW;newCv.height=ST.PH;
+  newCv.style.width=maxW+'px';newCv.style.height=dispH+'px';
+  wrap.replaceChild(newCv,cv);
+
+  newCv.addEventListener('mousedown',e=>onDS(e,false));
+  newCv.addEventListener('touchstart',e=>onDS(e,true),{passive:false});
+  document.addEventListener('mousemove',onDM);
+  document.addEventListener('mouseup',onDE);
+  document.addEventListener('touchmove',e=>{if(ST.dragging)e.preventDefault();onDM(e);},{passive:false});
+  document.addEventListener('touchend',onDE);
+}
+
+function cvPos(e,isTouch){
+  const cv=document.getElementById('decoCanvas');
+  const rect=cv.getBoundingClientRect();
+  const scaleX=ST.PW/rect.width,scaleY=ST.PH/rect.height;
+  const cx=isTouch?e.touches[0].clientX:e.clientX;
+  const cy=isTouch?e.touches[0].clientY:e.clientY;
+  return{x:(cx-rect.left)*scaleX,y:(cy-rect.top)*scaleY};
+}
+
+function onDS(e,isTouch){
+  const pos=cvPos(e,isTouch);
+  const items=ST.decoData[ST.curPhoto];
+  // hit test top-most
+  for(let i=items.length-1;i>=0;i--){
+    const item=items[i];
+    if(hitTest(item,pos)){
+      if(isTouch)e.preventDefault();
+      ST.selItem={photoIdx:ST.curPhoto,itemIdx:i};
+      ST.dragging={photoIdx:ST.curPhoto,itemIdx:i};
+      ST.dragOffX=pos.x-item.x;
+      ST.dragOffY=pos.y-item.y;
+      showSelLabel(item);
+      renderDecoCv();
+      return;
+    }
+  }
+  // deselect
+  ST.selItem=null;
+  document.getElementById('selItemLabel').textContent='';
+  renderDecoCv();
+}
+
+function hitTest(item,pos){
+  if(item.type==='text'){
+    const w=item.size*item.text.length*0.62;
+    const h=item.size;
+    return(pos.x>=item.x&&pos.x<=item.x+w&&pos.y>=item.y-h&&pos.y<=item.y+6);
+  } else if(item.type==='stamp'){
+    return(pos.x>=item.x&&pos.x<=item.x+item.w&&pos.y>=item.y&&pos.y<=item.y+item.h);
+  }
+  return false;
+}
+
+function showSelLabel(item){
+  const label=item.type==='text'?`"${item.text}"`:STAMPS[item.svgIdx].name;
+  document.getElementById('selItemLabel').textContent=`選択中: ${label} ← ドラッグで移動`;
+}
+
+function onDM(e){
+  if(!ST.dragging)return;
+  const{photoIdx,itemIdx}=ST.dragging;
+  const cv=document.getElementById('decoCanvas');if(!cv)return;
+  const isTouch=e.type.startsWith('touch');
+  const pos=cvPos(e,isTouch);
+  const item=ST.decoData[photoIdx][itemIdx];
+  item.x=Math.max(0,Math.min(ST.PW-10,pos.x-ST.dragOffX));
+  item.y=Math.max(10,Math.min(ST.PH,pos.y-ST.dragOffY));
+  renderDecoCv();
+}
+
+function onDE(){ST.dragging=null;}
+
+function renderDecoCv(){
+  const cv=document.getElementById('decoCanvas');if(!cv)return;
   const ctx=cv.getContext('2d');
-  ctx.clearRect(0,0,PW,PH);
+  const idx=ST.curPhoto;
+  ctx.clearRect(0,0,ST.PW,ST.PH);
   // BG
   ctx.fillStyle=ST.bgColors[idx]||'#000';
-  ctx.fillRect(0,0,PW,PH);
-  // photo
+  ctx.fillRect(0,0,ST.PW,ST.PH);
+  const drawDecos=()=>{
+    ST.decoData[idx].forEach((item,i)=>{
+      ctx.save();
+      const isSel=ST.selItem&&ST.selItem.photoIdx===idx&&ST.selItem.itemIdx===i;
+      if(item.type==='text'){
+        ctx.font=`bold ${item.size}px ${item.font}`;
+        ctx.fillStyle=item.color;
+        ctx.strokeStyle='rgba(0,0,0,.55)';
+        ctx.lineWidth=item.size*.12;
+        ctx.lineJoin='round';
+        ctx.strokeText(item.text,item.x,item.y);
+        ctx.fillText(item.text,item.x,item.y);
+        if(isSel){
+          const tw=ctx.measureText(item.text).width;
+          ctx.strokeStyle=var_cy;ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+          ctx.strokeRect(item.x-2,item.y-item.size-2,tw+4,item.size+6);
+          ctx.setLineDash([]);
+        }
+      } else if(item.type==='stamp'){
+        if(item.imgEl&&item.imgEl.complete&&item.imgEl.naturalWidth>0){
+          ctx.drawImage(item.imgEl,item.x,item.y,item.w,item.h);
+        }
+        if(isSel){
+          ctx.strokeStyle=var_cy;ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+          ctx.strokeRect(item.x-2,item.y-2,item.w+4,item.h+4);
+          ctx.setLineDash([]);
+        }
+      }
+      ctx.restore();
+    });
+  };
   if(ST.photos[idx]){
     const img=new Image();
-    img.onload=()=>{
-      ctx.drawImage(img,0,0,PW,PH);
-      drawDecoItems(ctx,idx);
-    };
+    img.onload=()=>{ctx.drawImage(img,0,0,ST.PW,ST.PH);drawDecos();};
     img.src=ST.photos[idx];
-  } else {
-    drawDecoItems(ctx,idx);
-  }
+  } else drawDecos();
 }
-
-function drawDecoItems(ctx,idx){
-  ST.decoData[idx].forEach(item=>{
-    ctx.save();
-    if(item.type==='text'){
-      ctx.font=`bold ${item.size}px ${item.font}`;
-      ctx.fillStyle=item.color;
-      ctx.strokeStyle='rgba(0,0,0,0.55)';
-      ctx.lineWidth=item.size*0.12;
-      ctx.lineJoin='round';
-      ctx.strokeText(item.text,item.x,item.y);
-      ctx.fillText(item.text,item.x,item.y);
-    } else if(item.type==='stamp'){
-      // draw SVG stamp via Image
-      // we store the rendered img in item.imgEl
-      if(item.imgEl && item.imgEl.complete && item.imgEl.naturalWidth>0){
-        ctx.drawImage(item.imgEl,item.x,item.y,item.w,item.h);
-      }
-    }
-    ctx.restore();
-  });
-}
-
-function selPhoto(idx){
-  ST.selPhoto=idx;
-  document.querySelectorAll('.dpwrap').forEach((w,i)=>w.classList.toggle('sel',i===idx));
-  document.getElementById('selLabel').textContent=`写真 ${idx+1} を編集中 ✏️`;
-}
+const var_cy='#00E5FF';
 
 function addText(){
-  const t=document.getElementById('txtIn').value.trim(); if(!t) return;
-  const idx=ST.selPhoto;
-  ST.decoData[idx].push({
-    type:'text', text:t,
-    x:Math.random()*(PW-120)+20,
-    y:Math.random()*(PH-60)+50,
-    color:ST.textColor, size:ST.fontSize, font:ST.fontVal
-  });
-  renderDeco(idx);
+  const t=document.getElementById('txtIn').value.trim();if(!t)return;
+  const idx=ST.curPhoto;
+  const item={type:'text',text:t,
+    x:Math.random()*(ST.PW-t.length*ST.fontSize*.5-20)+10,
+    y:Math.random()*(ST.PH-ST.fontSize-20)+ST.fontSize+10,
+    color:ST.textColor,size:ST.fontSize,font:ST.fontVal};
+  ST.decoData[idx].push(item);
+  ST.selItem={photoIdx:idx,itemIdx:ST.decoData[idx].length-1};
+  showSelLabel(item);
+  renderDecoCv();
   document.getElementById('txtIn').value='';
 }
 
 function addStamp(svgIdx){
-  const idx=ST.selPhoto;
-  const sz=Math.floor(PH*0.18);
-  const item={
-    type:'stamp', svgIdx,
-    x:Math.random()*(PW-sz), y:Math.random()*(PH-sz),
-    w:sz, h:sz, color:'#fff', size:sz,
-    imgEl:null
-  };
-  // convert SVG to img
+  const idx=ST.curPhoto;
+  const sz=Math.floor(Math.min(ST.PW,ST.PH)*.18);
+  const item={type:'stamp',svgIdx,
+    x:Math.random()*(ST.PW-sz),y:Math.random()*(ST.PH-sz),
+    w:sz,h:sz,imgEl:null};
   const blob=new Blob([STAMPS[svgIdx].svg],{type:'image/svg+xml'});
   const url=URL.createObjectURL(blob);
   const img=new Image();
-  img.onload=()=>{item.imgEl=img; renderDeco(idx);};
-  img.src=url;
-  item.imgEl=img;
+  img.onload=()=>{item.imgEl=img;renderDecoCv();};
+  img.src=url;item.imgEl=img;
   ST.decoData[idx].push(item);
+  ST.selItem={photoIdx:idx,itemIdx:ST.decoData[idx].length-1};
+  showSelLabel(item);
 }
 
-function clearSel(){
-  ST.decoData[ST.selPhoto]=[];
-  renderDeco(ST.selPhoto);
+function clearCurrent(){ST.decoData[ST.curPhoto]=[];ST.selItem=null;document.getElementById('selItemLabel').textContent='';renderDecoCv();}
+function undoLast(){const d=ST.decoData[ST.curPhoto];if(d.length>0){d.pop();ST.selItem=null;document.getElementById('selItemLabel').textContent='';renderDecoCv();}}
+function deleteSelectedItem(){
+  if(!ST.selItem)return;
+  const{photoIdx,itemIdx}=ST.selItem;
+  if(photoIdx===ST.curPhoto){ST.decoData[photoIdx].splice(itemIdx,1);ST.selItem=null;document.getElementById('selItemLabel').textContent='';renderDecoCv();}
 }
 
-function undoLast(){
-  const d=ST.decoData[ST.selPhoto];
-  if(d.length>0){d.pop(); renderDeco(ST.selPhoto);}
+// ─────────────────────────────────
+// PRINT
+// ─────────────────────────────────
+function getDecoSnapshot(idx){
+  return new Promise(resolve=>{
+    const cv=document.createElement('canvas');
+    cv.width=ST.PW;cv.height=ST.PH;
+    const ctx=cv.getContext('2d');
+    ctx.fillStyle=ST.bgColors[idx]||'#000';
+    ctx.fillRect(0,0,ST.PW,ST.PH);
+    const drawDecos=()=>{
+      ST.decoData[idx].forEach(item=>{
+        ctx.save();
+        if(item.type==='text'){
+          ctx.font=`bold ${item.size}px ${item.font}`;
+          ctx.fillStyle=item.color;
+          ctx.strokeStyle='rgba(0,0,0,.55)';
+          ctx.lineWidth=item.size*.12;ctx.lineJoin='round';
+          ctx.strokeText(item.text,item.x,item.y);
+          ctx.fillText(item.text,item.x,item.y);
+        } else if(item.type==='stamp'&&item.imgEl&&item.imgEl.complete){
+          ctx.drawImage(item.imgEl,item.x,item.y,item.w,item.h);
+        }
+        ctx.restore();
+      });
+      resolve(cv);
+    };
+    if(ST.photos[idx]){
+      const img=new Image();
+      img.onload=()=>{ctx.drawImage(img,0,0,ST.PW,ST.PH);drawDecos();};
+      img.src=ST.photos[idx];
+    } else drawDecos();
+  });
 }
 
-// ─────────────────────────────────────────
-//  DRAG  (canvas coord hit-test)
-// ─────────────────────────────────────────
-function setupDrag(){
+async function renderPrint(){
+  const snapshots=await Promise.all([0,1,2,3].map(i=>getDecoSnapshot(i)));
+
+  // Layout: 2x2 grid strip
+  const CW=Math.floor(ST.PW*.5), CH=Math.floor(ST.PH*.5);
+  const PAD=12;
+  const BORDER=3;
+  const SW=CW*2+PAD*3;
+  const SH=CH*2+PAD*4+32;
+
+  const cv=document.getElementById('printCanvas');
+  cv.width=SW;cv.height=SH;
+  const ctx=cv.getContext('2d');
+
+  // background
+  const bg=ctx.createLinearGradient(0,0,SW,SH);
+  bg.addColorStop(0,'#1A0033');bg.addColorStop(.5,'#0A0018');bg.addColorStop(1,'#1A0033');
+  ctx.fillStyle=bg;
+  if(ctx.roundRect)ctx.roundRect(0,0,SW,SH,12);else ctx.rect(0,0,SW,SH);
+  ctx.fill();
+
+  // shimmer edge
+  const sh=ctx.createLinearGradient(0,0,SW,0);
+  sh.addColorStop(0,'transparent');sh.addColorStop(.5,'#FF3D9A');sh.addColorStop(1,'transparent');
+  ctx.fillStyle=sh;ctx.fillRect(0,0,SW,2);ctx.fillRect(0,SH-2,SW,2);
+
+  const positions=[[PAD,PAD],[PAD*2+CW,PAD],[PAD,PAD*2+CH],[PAD*2+CW,PAD*2+CH]];
   for(let i=0;i<4;i++){
-    const cv=document.getElementById(`dc${i}`);
-    if(!cv) continue;
-
-    cv.addEventListener('mousedown', e=>onDragStart(e,'mouse',i));
-    cv.addEventListener('touchstart',e=>onDragStart(e,'touch',i),{passive:false});
+    const[x,y]=positions[i];
+    ctx.fillStyle='rgba(255,255,255,.88)';
+    ctx.fillRect(x-BORDER,y-BORDER,CW+BORDER*2,CH+BORDER*2);
+    ctx.drawImage(snapshots[i],x,y,CW,CH);
   }
-  document.addEventListener('mousemove', onDragMove);
-  document.addEventListener('mouseup',   onDragEnd);
-  document.addEventListener('touchmove', e=>{if(ST.dragging) e.preventDefault(); onDragMove(e);},{passive:false});
-  document.addEventListener('touchend',  onDragEnd);
+
+  // bottom text
+  ctx.font=`bold 10px 'Reggae One',sans-serif`;
+  ctx.fillStyle='#FF3D9A';ctx.textAlign='center';
+  ctx.shadowColor='#FF3D9A';ctx.shadowBlur=6;
+  ctx.fillText('★ PURIKURA STUDIO ★',SW/2,SH-PAD-10);
+  ctx.shadowBlur=0;
+  ctx.font=`7px 'DotGothic16',monospace`;
+  ctx.fillStyle='rgba(255,255,255,.3)';
+  const d=new Date();
+  ctx.fillText(`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`,SW/2,SH-PAD+2);
 }
 
-function getCanvasPos(e,cv,isTouch){
-  const rect=cv.getBoundingClientRect();
-  const scaleX=PW/rect.width, scaleY=PH/rect.height;
-  const clientX=isTouch? e.touches[0].clientX : e.clientX;
-  const clientY=isTouch? e.touches[0].clientY : e.clientY;
-  return {x:(clientX-rect.left)*scaleX, y:(clientY-rect.top)*scaleY};
-}
-
-function onDragStart(e, type, photoIdx){
-  // only act on selected photo
-  if(photoIdx!==ST.selPhoto) return;
-  const cv=document.getElementById(`dc${photoIdx}`);
-  const isTouch=type==='touch';
-  const pos=getCanvasPos(e,cv,isTouch);
-  const items=ST.decoData[photoIdx];
-  // find topmost hit item (reverse order)
-  for(let i=items.length-1;i>=0;i--){
-    const item=items[i];
-    let hit=false;
-    if(item.type==='text'){
-      // rough bounding
-      const w=item.size*item.text.length*0.65;
-      const h=item.size;
-      hit=(pos.x>=item.x && pos.x<=item.x+w && pos.y>=item.y-h && pos.y<=item.y+4);
-    } else if(item.type==='stamp'){
-      hit=(pos.x>=item.x && pos.x<=item.x+item.w && pos.y>=item.y && pos.y<=item.y+item.h);
-    }
-    if(hit){
-      if(isTouch) e.preventDefault();
-      ST.dragging={photoIdx, itemIdx:i};
-      ST.dragOffX=pos.x-item.x;
-      ST.dragOffY=pos.y-item.y;
-      return;
-    }
+// ─────────────────────────────────
+// DOWNLOAD (iOS対応)
+// ─────────────────────────────────
+async function handleDownload(){
+  await renderPrint();
+  const cv=document.getElementById('printCanvas');
+  const dataUrl=cv.toDataURL('image/png');
+  if(ST.isIOS){
+    // iOS: show image for long-press save
+    document.getElementById('saveImg').src=dataUrl;
+    document.getElementById('saveImgWrap').style.display='flex';
+    document.getElementById('iosTip').style.display='block';
+  } else {
+    const a=document.createElement('a');
+    a.download=`purikura_${Date.now()}.png`;
+    a.href=dataUrl;a.click();
   }
 }
 
-function onDragMove(e){
-  if(!ST.dragging) return;
-  const {photoIdx, itemIdx}=ST.dragging;
-  const cv=document.getElementById(`dc${photoIdx}`);
-  if(!cv) return;
-  const isTouch=e.type.startsWith('touch');
-  const pos=getCanvasPos(e,cv,isTouch);
-  const item=ST.decoData[photoIdx][itemIdx];
-  item.x=pos.x-ST.dragOffX;
-  item.y=pos.y-ST.dragOffY;
-  renderDeco(photoIdx);
-}
-
-function onDragEnd(){
-  ST.dragging=null;
-}
-
-// ─────────────────────────────────────────
-//  UI INIT (colors, fonts, stamps, bg)
-// ─────────────────────────────────────────
+// ─────────────────────────────────
+// UI INIT
+// ─────────────────────────────────
 function initSwatches(){
   const c=document.getElementById('swatches');
   COLORS.forEach(col=>{
     const sw=document.createElement('div');
     sw.className='sw'+(col===ST.textColor?' sel':'');
     sw.style.background=col;
-    sw.style.boxShadow=`0 0 0 1.5px ${col==='#ffffff'?'#aaa':col}`;
+    sw.style.outline=`1.5px solid ${col==='#ffffff'?'#aaa':col}`;
     sw.addEventListener('click',()=>{
       ST.textColor=col;
       document.querySelectorAll('.sw').forEach(s=>s.classList.remove('sel'));
@@ -825,7 +1137,7 @@ function initStamps(){
   const g=document.getElementById('stampGrid');
   STAMPS.forEach((s,i)=>{
     const btn=document.createElement('div');
-    btn.className='ostamp'; btn.title=s.name;
+    btn.className='ostamp';btn.title=s.name;
     btn.innerHTML=s.svg;
     btn.addEventListener('click',()=>addStamp(i));
     g.appendChild(btn);
@@ -834,32 +1146,24 @@ function initStamps(){
 
 function initBgPicker(){
   const g=document.getElementById('bgPicker');
-  BG_PRESETS.forEach(col=>{
-    const div=document.createElement('div');
-    div.className='bgcol'+(col==='#000000'?' sel':'');
-    div.style.background=col;
-    div.style.outline=`1px solid ${col==='#ffffff'?'#aaa':'rgba(255,255,255,.2)'}`;
-    div.addEventListener('click',()=>{
-      ST.bgColors[ST.selPhoto]=col;
+  BG_PRESETS.forEach((col,idx)=>{
+    const d=document.createElement('div');
+    d.className='bgcol'+(idx===0?' sel':'');
+    d.style.background=col;
+    d.style.outline=`1px solid ${col==='#ffffff'?'#aaa':'rgba(255,255,255,.2)'}`;
+    d.addEventListener('click',()=>{
+      ST.bgColors[ST.curPhoto]=col;
       document.querySelectorAll('.bgcol').forEach(b=>b.classList.remove('sel'));
-      div.classList.add('sel');
-      renderDeco(ST.selPhoto);
+      d.classList.add('sel');
+      renderDecoCv();
     });
-    g.appendChild(div);
+    g.appendChild(d);
   });
-  // custom color picker
   const cw=document.createElement('div');
-  cw.className='bgcol custom-wrap';
-  cw.style.background='linear-gradient(135deg,#ff3d9a,#00e5ff)';
-  cw.title='カスタム色';
-  const inp=document.createElement('input');
-  inp.type='color'; inp.value='#ff3d9a';
-  inp.addEventListener('input',()=>{
-    ST.bgColors[ST.selPhoto]=inp.value;
-    renderDeco(ST.selPhoto);
-  });
-  cw.appendChild(inp);
-  g.appendChild(cw);
+  cw.className='bgcol-custom';cw.title='カスタム色';
+  const inp=document.createElement('input');inp.type='color';inp.value='#ff3d9a';
+  inp.addEventListener('input',()=>{ST.bgColors[ST.curPhoto]=inp.value;renderDecoCv();});
+  cw.appendChild(inp);g.appendChild(cw);
 }
 
 document.getElementById('fsz').addEventListener('input',e=>{
@@ -867,78 +1171,9 @@ document.getElementById('fsz').addEventListener('input',e=>{
   document.getElementById('fszL').textContent=ST.fontSize;
 });
 
-// ─────────────────────────────────────────
-//  PRINT
-// ─────────────────────────────────────────
-function renderPrint(){
-  const CW=240, CH=180, PAD=14;
-  const SW=CW*2+PAD*3;
-  const SH=CH*2+PAD*4+36;
-  const cv=document.getElementById('printCanvas');
-  cv.width=SW; cv.height=SH;
-  const ctx=cv.getContext('2d');
-
-  // bg gradient
-  const bg=ctx.createLinearGradient(0,0,SW,SH);
-  bg.addColorStop(0,'#1A0033'); bg.addColorStop(.5,'#0A0018'); bg.addColorStop(1,'#1A0033');
-  ctx.fillStyle=bg;
-  ctx.beginPath();
-  if(ctx.roundRect) ctx.roundRect(0,0,SW,SH,12); else ctx.rect(0,0,SW,SH);
-  ctx.fill();
-
-  // shimmer edges
-  const sh1=ctx.createLinearGradient(0,0,SW,0);
-  sh1.addColorStop(0,'transparent'); sh1.addColorStop(.5,'#FF3D9A'); sh1.addColorStop(1,'transparent');
-  ctx.fillStyle=sh1;
-  ctx.fillRect(0,0,SW,2); ctx.fillRect(0,SH-2,SW,2);
-
-  const positions=[[PAD,PAD],[PAD*2+CW,PAD],[PAD,PAD*2+CH],[PAD*2+CW,PAD*2+CH]];
-  let drawn=0;
-
-  function tryFinish(){
-    drawn++;
-    if(drawn<4) return;
-    // bottom text
-    ctx.font=`bold 10px 'Reggae One',sans-serif`;
-    ctx.fillStyle='#FF3D9A';
-    ctx.textAlign='center';
-    ctx.shadowColor='#FF3D9A'; ctx.shadowBlur=6;
-    ctx.fillText('★ PURIKURA STUDIO ★',SW/2,SH-PAD-10);
-    ctx.shadowBlur=0;
-    ctx.font=`8px 'DotGothic16',monospace`;
-    ctx.fillStyle='rgba(255,255,255,.35)';
-    const d=new Date();
-    ctx.fillText(`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`,SW/2,SH-PAD+2);
-  }
-
-  for(let i=0;i<4;i++){
-    const src=document.getElementById(`dc${i}`);
-    const [x,y]=positions[i];
-    // white border
-    ctx.fillStyle='rgba(255,255,255,.88)';
-    ctx.fillRect(x-3,y-3,CW+6,CH+6);
-    if(src){
-      ctx.drawImage(src,x,y,CW,CH);
-      tryFinish();
-    } else tryFinish();
-  }
-}
-
-function download(){
-  renderPrint();
-  setTimeout(()=>{
-    const cv=document.getElementById('printCanvas');
-    const a=document.createElement('a');
-    a.download=`purikura_${Date.now()}.png`;
-    a.href=cv.toDataURL('image/png');
-    a.click();
-  },120);
-}
-
-// ─────────────────────────────────────────
-//  BOOT
-// ─────────────────────────────────────────
-initCam();
+// ─────────────────────────────────
+// BOOT
+// ─────────────────────────────────
 initSwatches();
 initFontSel();
 initStamps();
