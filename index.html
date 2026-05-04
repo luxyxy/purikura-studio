@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>★ PURIKURA STUDIO ★</title>
+<title>プリクラ初号機</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&family=DotGothic16&family=Yuji+Syuku&family=Reggae+One&family=Hachi+Maru+Pop&family=RocknRoll+One&display=swap" rel="stylesheet">
 <style>
@@ -180,8 +180,7 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 <div class="wrap">
 
 <div class="hdr">
-  <div class="hdr-logo">★ PURIKURA ★</div>
-  <div class="hdr-sub">プリクラ Web Studio v3.0</div>
+  <div class="hdr-logo">プリクラ初号機</div>
 </div>
 <div class="deco-bar"></div>
 
@@ -228,12 +227,12 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
   <div class="card">
     <div class="slabel">フレームを選ぼう</div>
     <div class="frame-picker" id="framePicker">
-      <button class="fbtn sel" data-frame="heart">💗 ハート</button>
-      <button class="fbtn" data-frame="star">⭐ スター</button>
-      <button class="fbtn" data-frame="flower">🌸 フラワー</button>
-      <button class="fbtn" data-frame="rainbow">🌈 レインボー</button>
-      <button class="fbtn" data-frame="cyber">💜 サイバー</button>
-      <button class="fbtn" data-frame="none">□ なし</button>
+      <button class="fbtn sel" data-frame="heart">ハート</button>
+      <button class="fbtn" data-frame="star">スター</button>
+      <button class="fbtn" data-frame="flower">フラワー</button>
+      <button class="fbtn" data-frame="rainbow">レインボー</button>
+      <button class="fbtn" data-frame="cyber">サイバー</button>
+      <button class="fbtn" data-frame="none">なし</button>
     </div>
     <div class="cam-outer">
       <div class="cam-wrap" id="camWrap">
@@ -248,7 +247,7 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
     </div>
     <div class="thumbs" id="thumbRow"></div>
   </div>
-  <button class="shoot-btn" id="shootBtn" onclick="startCD()"><span>📸 シャッター！（3秒後に撮影）</span></button>
+  <button class="shoot-btn" id="shootBtn" onclick="startCD()"><span>シャッター！（3秒後に撮影）</span></button>
   <div class="pcounter" id="pctr">0 / 4 枚 撮影済み</div>
   <div class="nav-row">
     <button class="nbtn" onclick="goPanel(0)">◀ サイズ変更</button>
@@ -279,7 +278,7 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
     <div class="slabel">テキスト追加</div>
     <div class="tool-row">
       <input class="ti" type="text" id="txtIn" placeholder="文字を入力..." maxlength="20">
-      <button class="ta-btn" onclick="addText()">追加 ✨</button>
+      <button class="ta-btn" onclick="addText()">追加</button>
     </div>
     <div class="tool-row">
       <span style="font-size:.63rem;color:rgba(255,255,255,.4);flex-shrink:0">色：</span>
@@ -308,8 +307,8 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 
   <div class="tool-row" style="margin-top:2px;padding:0 4px;">
     <button class="clr-btn" onclick="clearCurrent()">この写真をリセット</button>
-    <button class="clr-btn" onclick="undoLast()">↩ 元に戻す</button>
-    <button class="clr-btn" onclick="deleteSelectedItem()">🗑 選択削除</button>
+    <button class="clr-btn" onclick="undoLast()">元に戻す</button>
+    <button class="clr-btn" onclick="deleteSelectedItem()">選択削除</button>
   </div>
 
   <div class="nav-row">
@@ -325,11 +324,11 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
     <div class="star-deco">★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</div>
     <div class="print-wrap"><canvas id="printCanvas"></canvas></div>
     <div class="act-btns">
-      <button class="abtn-p" id="dlBtn" onclick="handleDownload()">💾 ダウンロード</button>
+      <button class="abtn-p" id="dlBtn" onclick="handleDownload()">ダウンロード</button>
       <button class="abtn-s" onclick="goPanel(2)">◀ もっとデコる</button>
     </div>
     <div class="ios-tip" id="iosTip" style="display:none">
-      📱 iOSの場合：画像を長押し → 「写真に追加」で保存できます
+      iOSの場合：画像を長押し → 「写真に追加」で保存できます
     </div>
   </div>
 </div>
@@ -695,7 +694,7 @@ async function initCam(){
     const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:960}},audio:false});
     ST.stream=s;document.getElementById('videoEl').srcObject=s;
   }catch(e){
-    document.getElementById('camWrap').innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:10px;color:rgba(255,255,255,.5);font-size:.8rem;padding:16px;text-align:center"><span style="font-size:2rem">📷</span>カメラへのアクセスが必要です。<br>ブラウザの設定でカメラを許可してください。<br><small style="opacity:.5">${e.message}</small></div>`;
+    document.getElementById('camWrap').innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:10px;color:rgba(255,255,255,.5);font-size:.8rem;padding:16px;text-align:center">カメラへのアクセスが必要です。<br>ブラウザの設定でカメラを許可してください。<br><small style="opacity:.5">${e.message}</small></div>`;
   }
 }
 
@@ -722,7 +721,7 @@ function startCD(){
   document.getElementById('shootBtn').disabled=true;
   const cd=document.getElementById('cdOv');
   cd.style.opacity='1';let c=3;cd.textContent=c;
-  const t=setInterval(()=>{c--;if(c>0){cd.textContent=c;}else{clearInterval(t);cd.textContent='📸';capturePhoto();}},1000);
+  const t=setInterval(()=>{c--;if(c>0){cd.textContent=c;}else{clearInterval(t);cd.textContent='!';capturePhoto();}},1000);
 }
 
 function capturePhoto(){
@@ -751,7 +750,7 @@ function capturePhoto(){
   document.getElementById('pctr').textContent=`${ST.photosTaken} / 4 枚 撮影済み`;
   ST.shooting=false;
   const sb=document.getElementById('shootBtn');
-  if(ST.photosTaken>=4){sb.disabled=true;sb.querySelector('span').textContent='✅ 4枚撮影完了！';document.getElementById('goDecoBtn').disabled=false;}
+  if(ST.photosTaken>=4){sb.disabled=true;sb.querySelector('span').textContent='4枚撮影完了！';document.getElementById('goDecoBtn').disabled=false;}
   else sb.disabled=false;
 }
 
