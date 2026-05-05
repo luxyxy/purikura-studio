@@ -233,7 +233,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
   </div>
   <div class="nav-row">
-    <button class="nbtn next" onclick="goPanel(1)">撮影へ ▶</button>
+    <button class="nbtn next" onclick="goPanel(1)">撮影へ</button>
   </div>
 </div>
 
@@ -279,8 +279,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <button class="shoot-btn" id="shootBtn" onclick="startCD()"><span id="shootLabel">シャッター！（3秒後に撮影）</span></button>
   <div class="pcounter" id="pctr">0 / 4 枚 撮影済み</div>
   <div class="nav-row">
-    <button class="nbtn" onclick="goPanel(0)">◀ サイズ変更</button>
-    <button class="nbtn next" id="goDecoBtn" onclick="goPanel(2)" disabled>デコる ▶</button>
+    <button class="nbtn" onclick="goPanel(0)">サイズ変更</button>
+    <button class="nbtn next" id="goDecoBtn" onclick="goPanel(2)" disabled>デコる</button>
   </div>
 </div>
 
@@ -288,9 +288,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="panel" id="p2">
   <!-- Photo nav -->
   <div class="photo-nav">
-    <button class="pnav-btn" id="prevPhotoBtn" onclick="changeDecoPhoto(-1)">◀</button>
+    <button class="pnav-btn" id="prevPhotoBtn" onclick="changeDecoPhoto(-1)">前</button>
     <div class="photo-dots" id="photoDots"></div>
-    <button class="pnav-btn" id="nextPhotoBtn" onclick="changeDecoPhoto(1)">▶</button>
+    <button class="pnav-btn" id="nextPhotoBtn" onclick="changeDecoPhoto(1)">次</button>
   </div>
 
   <div class="card cy" style="margin-bottom:8px;">
@@ -353,8 +353,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 
   <div class="nav-row">
-    <button class="nbtn" onclick="goPanel(1)">◀ 撮り直す</button>
-    <button class="nbtn next" onclick="goPanel(3)">プリントへ ▶</button>
+    <button class="nbtn" onclick="goPanel(1)">撮り直す</button>
+    <button class="nbtn next" onclick="goPanel(3)">プリントへ</button>
   </div>
 </div>
 
@@ -366,10 +366,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="print-wrap"><canvas id="printCanvas"></canvas></div>
     <div class="act-btns">
       <button class="abtn-p" id="dlBtn" onclick="handleDownload()">ダウンロード</button>
-      <button class="abtn-s" onclick="goPanel(2)">◀ もっとデコる</button>
+      <button class="abtn-s" onclick="goPanel(2)">もっとデコる</button>
     </div>
     <div class="ios-tip" id="iosTip" style="display:none">
-      iOSの場合：画像を長押し → 「写真に追加」で保存できます
+      iOSの場合：画像を長押し、「写真に追加」で保存できます
     </div>
   </div>
 </div>
@@ -957,12 +957,17 @@ function reapplyFrameToAllPhotos(){
 // PANEL NAV
 // ─────────────────────────────────
 function goPanel(n){
-  // leaving panel 1: re-init cam for new size if needed
   if(n===1&&ST.panel===0){initCam();}
   ST.panel=n;
-  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===n));
+  // show/hide panels by ID
+  for(let i=0;i<=3;i++){
+    const p=document.getElementById(`p${i}`);
+    if(p) p.classList.toggle('active',i===n);
+  }
+  // update step indicators
   ['s0','s1','s2','s3'].forEach((id,i)=>{
     const el=document.getElementById(id);
+    if(!el) return;
     el.classList.toggle('active',i===n);
     el.classList.toggle('done',i<n);
   });
@@ -1099,7 +1104,7 @@ function hitTest(item,pos){
 
 function showSelLabel(item){
   const label=item.type==='text'?`"${item.text}"`:STAMPS[item.svgIdx].name;
-  document.getElementById('selItemLabel').textContent=`選択中: ${label} ← ドラッグで移動`;
+  document.getElementById('selItemLabel').textContent=`選択中: ${label}（ドラッグで移動）`;
 }
 
 function onDM(e){
