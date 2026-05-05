@@ -648,16 +648,6 @@ const ST={
 ST.isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||
   (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 
-// ─────────────────────────────────
-// SIZE SELECTOR
-// ─────────────────────────────────
-document.getElementById('sizeGrid').addEventListener('click',e=>{
-  const card=e.target.closest('.size-card'); if(!card) return;
-  document.querySelectorAll('.size-card').forEach(c=>c.classList.remove('sel'));
-  card.classList.add('sel');
-  ST.PW=parseInt(card.dataset.w);
-  ST.PH=parseInt(card.dataset.h);
-});
 
 // ─────────────────────────────────
 // FRAME DRAW
@@ -751,13 +741,8 @@ function buildThumbs(){
   }
 }
 
-document.getElementById('framePicker').addEventListener('click',e=>{
-  const b=e.target.closest('.fbtn');if(!b)return;
-  document.querySelectorAll('#framePicker .fbtn').forEach(x=>x.classList.remove('sel'));
-  b.classList.add('sel');ST.frame=b.dataset.frame;
-  // sync deco panel picker
-  syncDecoFramePicker();
-});
+
+
 
 function syncDecoFramePicker(){
   const dp=document.getElementById('framePickerDeco');if(!dp)return;
@@ -1374,18 +1359,32 @@ function initBgPicker(){
   cw.appendChild(inp);g.appendChild(cw);
 }
 
-document.getElementById('fsz').addEventListener('input',e=>{
-  ST.fontSize=parseInt(e.target.value);
-  document.getElementById('fszL').textContent=ST.fontSize;
-});
+document.addEventListener('DOMContentLoaded',()=>{
+  initSwatches();
+  initFontSel();
+  initStamps();
+  initBgPicker();
 
-// ─────────────────────────────────
-// BOOT
-// ─────────────────────────────────
-initSwatches();
-initFontSel();
-initStamps();
-initBgPicker();
+  document.getElementById('sizeGrid').addEventListener('click',e=>{
+    const card=e.target.closest('.size-card');if(!card)return;
+    document.querySelectorAll('.size-card').forEach(c=>c.classList.remove('sel'));
+    card.classList.add('sel');
+    ST.PW=parseInt(card.dataset.w);
+    ST.PH=parseInt(card.dataset.h);
+  });
+
+  document.getElementById('framePicker').addEventListener('click',e=>{
+    const b=e.target.closest('.fbtn');if(!b)return;
+    document.querySelectorAll('#framePicker .fbtn').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');ST.frame=b.dataset.frame;
+    syncDecoFramePicker();
+  });
+
+  document.getElementById('fsz').addEventListener('input',e=>{
+    ST.fontSize=parseInt(e.target.value);
+    document.getElementById('fszL').textContent=ST.fontSize;
+  });
+});
 </script>
 </body>
 </html>
