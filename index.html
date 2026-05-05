@@ -16,7 +16,6 @@
 html,body{height:100%;overflow-x:hidden;}
 body{background:var(--bg);font-family:'Zen Maru Gothic',sans-serif;color:#fff;min-height:100vh;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 20% 30%,rgba(177,74,237,.15) 0%,transparent 60%),radial-gradient(ellipse 50% 60% at 80% 70%,rgba(255,61,154,.12) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 50% 10%,rgba(0,229,255,.08) 0%,transparent 50%);pointer-events:none;z-index:0;}
-body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px);pointer-events:none;z-index:999;}
 .wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:8px 10px 40px;}
 
 /* HEADER */
@@ -174,6 +173,22 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 
 /* iOS tip */
 .ios-tip{font-family:'DotGothic16',monospace;font-size:.55rem;color:rgba(255,225,53,.6);text-align:center;margin-top:8px;line-height:1.8;letter-spacing:.5px;}
+
+/* TIMER TOGGLE */
+.timer-row{display:flex;align-items:center;gap:10px;margin-top:8px;}
+.timer-label{font-family:'DotGothic16',monospace;font-size:.6rem;color:rgba(255,255,255,.45);letter-spacing:2px;flex-shrink:0;}
+.timer-toggle{display:flex;gap:4px;}
+.tbtn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-size:.65rem;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;transition:all .2s;font-weight:700;}
+.tbtn:hover{border-color:var(--cy);color:var(--cy);}
+.tbtn.sel{background:var(--cy);border-color:var(--cy);color:var(--bg);box-shadow:0 0 8px rgba(0,229,255,.4);}
+
+/* MORU TOGGLE */
+.moru-row{display:flex;align-items:center;gap:10px;margin-top:6px;}
+.moru-label{font-family:'DotGothic16',monospace;font-size:.6rem;color:rgba(255,255,255,.45);letter-spacing:2px;flex-shrink:0;}
+.moru-toggle{display:flex;gap:4px;}
+.mbtn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-size:.65rem;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;transition:all .2s;font-weight:700;}
+.mbtn:hover{border-color:var(--pk);color:var(--pk);}
+.mbtn.sel{background:var(--pk);border-color:var(--pk);color:#fff;box-shadow:0 0 8px rgba(255,61,154,.4);}
 </style>
 </head>
 <body>
@@ -246,8 +261,22 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
       </div>
     </div>
     <div class="thumbs" id="thumbRow"></div>
+    <div class="timer-row">
+      <span class="timer-label">タイマー</span>
+      <div class="timer-toggle">
+        <button class="tbtn sel" id="timerOn" onclick="setTimer(true)">あり（3秒）</button>
+        <button class="tbtn" id="timerOff" onclick="setTimer(false)">なし</button>
+      </div>
+    </div>
+    <div class="moru-row">
+      <span class="moru-label">盛れる</span>
+      <div class="moru-toggle">
+        <button class="mbtn sel" id="moruOn" onclick="setMoru(true)">ON</button>
+        <button class="mbtn" id="moruOff" onclick="setMoru(false)">OFF</button>
+      </div>
+    </div>
   </div>
-  <button class="shoot-btn" id="shootBtn" onclick="startCD()"><span>シャッター！（3秒後に撮影）</span></button>
+  <button class="shoot-btn" id="shootBtn" onclick="startCD()"><span id="shootLabel">シャッター！（3秒後に撮影）</span></button>
   <div class="pcounter" id="pctr">0 / 4 枚 撮影済み</div>
   <div class="nav-row">
     <button class="nbtn" onclick="goPanel(0)">◀ サイズ変更</button>
@@ -264,13 +293,25 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
     <button class="pnav-btn" id="nextPhotoBtn" onclick="changeDecoPhoto(1)">▶</button>
   </div>
 
+  <div class="card cy" style="margin-bottom:8px;">
+    <div class="slabel">フレーム変更（全枚数に適用）</div>
+    <div class="frame-picker" id="framePickerDeco">
+      <button class="fbtn sel" data-frame="heart">ハート</button>
+      <button class="fbtn" data-frame="star">スター</button>
+      <button class="fbtn" data-frame="flower">フラワー</button>
+      <button class="fbtn" data-frame="rainbow">レインボー</button>
+      <button class="fbtn" data-frame="cyber">サイバー</button>
+      <button class="fbtn" data-frame="none">なし</button>
+    </div>
+  </div>
+
   <div class="card cy">
     <div class="deco-single">
       <div class="deco-cv-wrap" id="decoCvWrap">
         <canvas id="decoCanvas"></canvas>
       </div>
     </div>
-    <div class="drag-hint">💡 テキスト・スタンプをドラッグで移動 ／ タップで選択</div>
+    <div class="drag-hint">テキスト・スタンプをドラッグで移動 ／ タップで選択</div>
     <div class="sel-item-label" id="selItemLabel"></div>
   </div>
 
@@ -321,7 +362,7 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 <div class="panel" id="p3">
   <div class="card yw">
     <div class="slabel">プリクラ 完成！</div>
-    <div class="star-deco">★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</div>
+    <div class="star-deco">- - - - - - - - -</div>
     <div class="print-wrap"><canvas id="printCanvas"></canvas></div>
     <div class="act-btns">
       <button class="abtn-p" id="dlBtn" onclick="handleDownload()">ダウンロード</button>
@@ -333,8 +374,6 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
   </div>
 </div>
 
-<div class="star-deco">★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</div>
-</div><!-- /wrap -->
 
 <canvas id="capCv" style="display:none"></canvas>
 <div id="saveImgWrap" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;">
@@ -582,10 +621,13 @@ const STAMPS=[
 // ─────────────────────────────────
 const ST={
   panel:0,
-  PW:360,PH:360,          // photo dimensions (set by size picker)
+  PW:360,PH:360,
   frame:'heart',
+  useTimer:true,
+  moru:true,
   photosTaken:0,
   photos:[null,null,null,null],
+  rawPhotos:[null,null,null,null],
   decoData:[[],[],[],[]],   // {type,text/svgIdx,x,y,color,size,font,w,h,imgEl}
   bgColors:['#000000','#000000','#000000','#000000'],
   curPhoto:0,             // which photo in deco panel
@@ -711,14 +753,125 @@ function buildThumbs(){
 
 document.getElementById('framePicker').addEventListener('click',e=>{
   const b=e.target.closest('.fbtn');if(!b)return;
-  document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('sel'));
+  document.querySelectorAll('#framePicker .fbtn').forEach(x=>x.classList.remove('sel'));
   b.classList.add('sel');ST.frame=b.dataset.frame;
+  // sync deco panel picker
+  syncDecoFramePicker();
 });
+
+function syncDecoFramePicker(){
+  const dp=document.getElementById('framePickerDeco');if(!dp)return;
+  dp.querySelectorAll('.fbtn').forEach(b=>{
+    b.classList.toggle('sel',b.dataset.frame===ST.frame);
+  });
+}
+
+function setTimer(on){
+  ST.useTimer=on;
+  document.getElementById('timerOn').classList.toggle('sel',on);
+  document.getElementById('timerOff').classList.toggle('sel',!on);
+  document.getElementById('shootLabel').textContent=on?'シャッター！（3秒後に撮影）':'シャッター！';
+}
+
+function setMoru(on){
+  ST.moru=on;
+  document.getElementById('moruOn').classList.toggle('sel',on);
+  document.getElementById('moruOff').classList.toggle('sel',!on);
+}
+
+// ─────────────────────────────────
+// 盛れる処理
+// 1. 肌色を明るく・白く（ピクセル操作）
+// 2. 画像中央上部を球面膨張（目・顔を大きく）
+// ─────────────────────────────────
+function applyMoru(srcCanvas){
+  const W=srcCanvas.width, H=srcCanvas.height;
+  const out=document.createElement('canvas');
+  out.width=W; out.height=H;
+  const ctx=out.getContext('2d');
+
+  // Step 1: 肌補正（明るく・美白）
+  ctx.drawImage(srcCanvas,0,0);
+  const imgData=ctx.getImageData(0,0,W,H);
+  const d=imgData.data;
+  for(let i=0;i<d.length;i+=4){
+    const r=d[i],g=d[i+1],b=d[i+2];
+    // 肌色判定（広めに）
+    const isSkin=(r>100&&g>60&&b>40&&r>g&&r>b&&(r-g)>10&&(r-b)>5&&r<250);
+    if(isSkin){
+      // 明るく（肌を白っぽく）
+      d[i]  =Math.min(255,r+28);
+      d[i+1]=Math.min(255,g+18);
+      d[i+2]=Math.min(255,b+14);
+    }
+  }
+  ctx.putImageData(imgData,0,0);
+
+  // Step 2: 目元拡大（顔中心上部を球面レンズ変形）
+  // 顔の目があるあたり（中央横、上から35%）を中心に拡大
+  const src2=ctx.getImageData(0,0,W,H);
+  const dst=ctx.createImageData(W,H);
+  const sd=src2.data, dd=dst.data;
+
+  // 拡大中心: 横中央、縦は35%の位置（目のあたり）
+  const cx=W*0.5, cy=H*0.35;
+  // 影響半径: 画像の小さい辺の38%
+  const R=Math.min(W,H)*0.38;
+  // 膨張強度（0〜1、小さいほど自然）
+  const strength=0.18;
+
+  for(let y=0;y<H;y++){
+    for(let x=0;x<W;x++){
+      const dx=x-cx, dy=y-cy;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      let sx=x, sy=y;
+      if(dist<R&&dist>0){
+        // 球面レンズ：中心ほど強く外に押し出し→サンプリング元を内側に引く
+        const t=dist/R;
+        const factor=1-strength*(1-t*t);
+        sx=cx+dx*factor;
+        sy=cy+dy*factor;
+      }
+      // バイリニアサンプリング
+      const x0=Math.max(0,Math.min(W-1,Math.floor(sx)));
+      const y0=Math.max(0,Math.min(H-1,Math.floor(sy)));
+      const x1=Math.min(W-1,x0+1);
+      const y1=Math.min(H-1,y0+1);
+      const fx=sx-x0, fy=sy-y0;
+      const i00=(y0*W+x0)*4;
+      const i10=(y0*W+x1)*4;
+      const i01=(y1*W+x0)*4;
+      const i11=(y1*W+x1)*4;
+      const di=(y*W+x)*4;
+      for(let c=0;c<4;c++){
+        dd[di+c]=
+          sd[i00+c]*(1-fx)*(1-fy)+
+          sd[i10+c]*fx*(1-fy)+
+          sd[i01+c]*(1-fx)*fy+
+          sd[i11+c]*fx*fy;
+      }
+    }
+  }
+  ctx.putImageData(dst,0,0);
+
+  // Step 3: 全体にソフト明るさ（コントラスト調整）
+  ctx.globalCompositeOperation='screen';
+  ctx.fillStyle='rgba(255,240,248,0.06)';
+  ctx.fillRect(0,0,W,H);
+  ctx.globalCompositeOperation='source-over';
+
+  return out;
+}
 
 function startCD(){
   if(ST.shooting||ST.photosTaken>=4)return;
   ST.shooting=true;
   document.getElementById('shootBtn').disabled=true;
+  if(!ST.useTimer){
+    // immediate capture
+    capturePhoto();
+    return;
+  }
   const cd=document.getElementById('cdOv');
   cd.style.opacity='1';let c=3;cd.textContent=c;
   const t=setInterval(()=>{c--;if(c>0){cd.textContent=c;}else{clearInterval(t);cd.textContent='!';capturePhoto();}},1000);
@@ -740,6 +893,14 @@ function capturePhoto(){
   ctx.save();ctx.translate(ST.PW,0);ctx.scale(-1,1);
   ctx.drawImage(v,sx,sy,sw,sh,0,0,ST.PW,ST.PH);
   ctx.restore();
+  // save raw (no frame, no moru) for later re-apply
+  ST.rawPhotos[ST.photosTaken]=cv.toDataURL('image/png');
+  // 盛れる処理
+  if(ST.moru){
+    const moruCv=applyMoru(cv);
+    ctx.clearRect(0,0,ST.PW,ST.PH);
+    ctx.drawImage(moruCv,0,0);
+  }
   drawFrame(ctx,ST.PW,ST.PH,ST.frame);
   const url=cv.toDataURL('image/png');
   const idx=ST.photosTaken;
@@ -754,7 +915,37 @@ function capturePhoto(){
   else sb.disabled=false;
 }
 
-function updateThumb(idx,url){
+function reapplyFrameToAllPhotos(){
+  // Re-render each captured photo with the new frame onto ST.photos[i]
+  // We keep the raw video snapshot separately; here we store base+frame together.
+  // Since we bake the frame at capture time, we need to re-bake from rawPhotos.
+  const tasks=[];
+  for(let i=0;i<4;i++){
+    if(!ST.rawPhotos[i])continue;
+    tasks.push(new Promise(resolve=>{
+      const cv=document.createElement('canvas');
+      cv.width=ST.PW;cv.height=ST.PH;
+      const ctx=cv.getContext('2d');
+      const img=new Image();
+      img.onload=()=>{
+        ctx.drawImage(img,0,0,ST.PW,ST.PH);
+        if(ST.moru){
+          const moruCv=applyMoru(cv);
+          ctx.clearRect(0,0,ST.PW,ST.PH);
+          ctx.drawImage(moruCv,0,0);
+        }
+        drawFrame(ctx,ST.PW,ST.PH,ST.frame);
+        ST.photos[i]=cv.toDataURL('image/png');
+        // update thumbnail
+        const slot=document.getElementById(`t${i}`);
+        if(slot){const ti=slot.querySelector('img');if(ti)ti.src=ST.photos[i];}
+        resolve();
+      };
+      img.src=ST.rawPhotos[i];
+    }));
+  }
+  Promise.all(tasks).then(()=>renderDecoCv());
+}
   const el=document.getElementById(`t${idx}`);
   el.classList.remove('cur');el.classList.add('done');
   el.innerHTML=`<img src="${url}"><span class="tnum">${idx+1}</span>`;
@@ -787,6 +978,19 @@ function initDecoPanel(){
   buildPhotoDots();
   setupDecoCanvas();
   renderDecoCv();
+  // init deco frame picker
+  const dp=document.getElementById('framePickerDeco');
+  dp.addEventListener('click',e=>{
+    const b=e.target.closest('.fbtn');if(!b)return;
+    dp.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    ST.frame=b.dataset.frame;
+    // sync camera panel picker
+    document.querySelectorAll('#framePicker .fbtn').forEach(x=>x.classList.toggle('sel',x.dataset.frame===ST.frame));
+    // reapply frame to all captured photos
+    reapplyFrameToAllPhotos();
+  });
+  syncDecoFramePicker();
 }
 
 function buildPhotoDots(){
