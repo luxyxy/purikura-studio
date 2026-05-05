@@ -931,6 +931,8 @@ function reapplyFrameToAllPhotos(){
   }
   Promise.all(tasks).then(()=>renderDecoCv());
 }
+
+function updateThumb(idx,url){
   const el=document.getElementById(`t${idx}`);
   el.classList.remove('cur');el.classList.add('done');
   el.innerHTML=`<img src="${url}"><span class="tnum">${idx+1}</span>`;
