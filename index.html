@@ -836,90 +836,47 @@ function setMoru(on){
 }
 
 // ─────────────────────────────────
-// 盛れる処理
-// 1. 肌色を明るく・白く（ピクセル操作）
-// 2. 画像中央上部を球面膨張（目・顔を大きく）
+// 盛れる処理（肌を白く・きれいに）
 // ─────────────────────────────────
 function applyMoru(srcCanvas){
   const W=srcCanvas.width, H=srcCanvas.height;
   const out=document.createElement('canvas');
   out.width=W; out.height=H;
   const ctx=out.getContext('2d');
-
-  // Step 1: 肌補正（明るく・美白）
   ctx.drawImage(srcCanvas,0,0);
+
   const imgData=ctx.getImageData(0,0,W,H);
   const d=imgData.data;
+
   for(let i=0;i<d.length;i+=4){
-    const r=d[i],g=d[i+1],b=d[i+2];
-    // 肌色判定（広めに）
-    const isSkin=(r>100&&g>60&&b>40&&r>g&&r>b&&(r-g)>10&&(r-b)>5&&r<250);
+    const r=d[i], g=d[i+1], b=d[i+2];
+
+    // 肌色判定（暖色系・広め）
+    const isSkin=(r>80 && g>50 && b>30 && r>b && r>g*0.85 && r<252);
+
     if(isSkin){
-      // 明るく（肌を白っぽく）
-      d[i]  =Math.min(255,r+28);
-      d[i+1]=Math.min(255,g+18);
-      d[i+2]=Math.min(255,b+14);
+      // 明るさを上げて白く
+      const bright=40;
+      const nr=Math.min(255, r+bright);
+      const ng=Math.min(255, g+bright*0.85);
+      const nb=Math.min(255, b+bright*0.75);
+      // 彩度を少し下げてさらに白っぽく（元色と白の中間に近づける）
+      const sat=0.55; // 0=完全に白、1=元のまま
+      d[i]  =Math.round(nr*sat + 255*(1-sat));
+      d[i+1]=Math.round(ng*sat + 255*(1-sat));
+      d[i+2]=Math.round(nb*sat + 255*(1-sat));
+    } else {
+      // 非肌色も全体的に少し明るく（背景含め自然に）
+      d[i]  =Math.min(255, r+10);
+      d[i+1]=Math.min(255, g+10);
+      d[i+2]=Math.min(255, b+10);
     }
   }
   ctx.putImageData(imgData,0,0);
 
-  // Step 2: 目元拡大 — 2段階の球面レンズで目を大きく
-  // 第1レンズ：目全体エリア（顔中央上 35%）を大きく膨張
-  // 第2レンズ：さらに目の左右それぞれを個別に拡大
-  const src2=ctx.getImageData(0,0,W,H);
-  const dst=ctx.createImageData(W,H);
-  const sd=src2.data, dd=dst.data;
-
-  // メインレンズ（目全体エリア）
-  const cx=W*0.5,  cy=H*0.32;   // 横中央・縦32%（目のあたり）
-  const R =Math.min(W,H)*0.40;  // 影響半径
-  const strength=0.34;           // 膨張強度（前の2倍弱）
-
-  // サブレンズ左目・右目（さらに局所拡大）
-  const lex=W*0.36, ley=H*0.31, leR=Math.min(W,H)*0.14, leS=0.22;
-  const rex=W*0.64, rey=H*0.31, reR=Math.min(W,H)*0.14, reS=0.22;
-
-  function lensDisplace(px,py,lcx,lcy,lR,lS){
-    const dx=px-lcx, dy=py-lcy;
-    const dist=Math.sqrt(dx*dx+dy*dy);
-    if(dist>=lR||dist===0) return{x:px,y:py};
-    const t=dist/lR;
-    const factor=1-lS*(1-t*t);
-    return{x:lcx+dx*factor, y:lcy+dy*factor};
-  }
-
-  for(let y=0;y<H;y++){
-    for(let x=0;x<W;x++){
-      // メインレンズ
-      let p=lensDisplace(x,y,cx,cy,R,strength);
-      // 左目サブレンズ
-      p=lensDisplace(p.x,p.y,lex,ley,leR,leS);
-      // 右目サブレンズ
-      p=lensDisplace(p.x,p.y,rex,rey,reR,reS);
-
-      // バイリニアサンプリング
-      const sx=Math.max(0,Math.min(W-1,p.x));
-      const sy=Math.max(0,Math.min(H-1,p.y));
-      const x0=Math.floor(sx), y0=Math.floor(sy);
-      const x1=Math.min(W-1,x0+1), y1=Math.min(H-1,y0+1);
-      const fx=sx-x0, fy=sy-y0;
-      const i00=(y0*W+x0)*4, i10=(y0*W+x1)*4;
-      const i01=(y1*W+x0)*4, i11=(y1*W+x1)*4;
-      const di=(y*W+x)*4;
-      for(let c=0;c<4;c++){
-        dd[di+c]=
-          sd[i00+c]*(1-fx)*(1-fy)+
-          sd[i10+c]*fx*(1-fy)+
-          sd[i01+c]*(1-fx)*fy+
-          sd[i11+c]*fx*fy;
-      }
-    }
-  }
-  ctx.putImageData(dst,0,0);
-
-  // Step 3: 全体にソフト明るさ（コントラスト調整）
+  // 仕上げ：全体にやわらかい白みを薄くのせる
   ctx.globalCompositeOperation='screen';
-  ctx.fillStyle='rgba(255,240,248,0.06)';
+  ctx.fillStyle='rgba(255,245,250,0.10)';
   ctx.fillRect(0,0,W,H);
   ctx.globalCompositeOperation='source-over';
 
