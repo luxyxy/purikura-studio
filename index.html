@@ -80,6 +80,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .countdown-ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);font-family:'Reggae One',sans-serif;font-size:6rem;color:var(--yw);text-shadow:0 0 40px var(--yw);pointer-events:none;opacity:0;z-index:10;transition:opacity .15s;}
 .flash-ov{position:absolute;inset:0;background:#fff;pointer-events:none;opacity:0;z-index:20;transition:opacity .08s;}
 
+/* IN-CAMERA SHUTTER BTN */
+.cam-shutter-wrap{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);z-index:15;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.cam-shutter-wrap:active .shutter-svg{transform:scale(.88);}
+.shutter-svg{width:64px;height:64px;transition:transform .1s;filter:drop-shadow(0 0 10px rgba(255,61,154,.8));}
+
+/* ZOOM SLIDER */
+.zoom-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;padding:0 2px;}
+.zoom-label{font-family:'DotGothic16',monospace;font-size:.58rem;color:rgba(255,255,255,.4);letter-spacing:2px;flex-shrink:0;width:30px;}
+.zoom-val{font-family:'DotGothic16',monospace;font-size:.58rem;color:var(--pk);flex-shrink:0;width:32px;text-align:right;}
+.zslider{-webkit-appearance:none;flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.18);outline:none;}
+.zslider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--pk);cursor:pointer;box-shadow:0 0 6px var(--pk);}
+
 /* THUMBS */
 .thumbs{display:flex;gap:5px;justify-content:center;margin-bottom:10px;}
 .tslot{border-radius:6px;border:2px dashed rgba(255,255,255,.15);background:rgba(0,0,0,.3);overflow:hidden;position:relative;flex-shrink:0;}
@@ -258,9 +270,44 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         </div>
         <div class="countdown-ov" id="cdOv"></div>
         <div class="flash-ov" id="flashOv"></div>
+        <!-- カメラ内シャッターボタン -->
+        <div class="cam-shutter-wrap" id="camShutterBtn" onclick="startCD()">
+          <svg class="shutter-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="sg1" cx="40%" cy="35%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#FF3D9A"/></radialGradient>
+              <radialGradient id="sg2" cx="40%" cy="30%"><stop offset="0%" stop-color="#FFE135"/><stop offset="100%" stop-color="#FF6B1A"/></radialGradient>
+              <filter id="sgGlow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <!-- カメラ本体 -->
+            <rect x="6" y="18" width="52" height="36" rx="7" fill="#1A0033" stroke="#FF3D9A" stroke-width="2"/>
+            <!-- レンズ外枠 -->
+            <circle cx="32" cy="36" r="13" fill="#0D0018" stroke="#FF3D9A" stroke-width="2.5"/>
+            <!-- レンズ内グラデ -->
+            <circle cx="32" cy="36" r="10" fill="url(#sg1)" filter="url(#sgGlow)"/>
+            <circle cx="32" cy="36" r="7" fill="#0D0018"/>
+            <circle cx="32" cy="36" r="4.5" fill="url(#sg2)"/>
+            <!-- ハイライト -->
+            <ellipse cx="29" cy="33" rx="2" ry="1.5" fill="white" opacity=".7"/>
+            <!-- ファインダー -->
+            <rect x="10" y="22" width="10" height="6" rx="2" fill="#B14AED" opacity=".7" stroke="#B14AED" stroke-width="1"/>
+            <!-- シャッターボタン出っ張り -->
+            <rect x="42" y="14" width="10" height="7" rx="3" fill="#FF3D9A"/>
+            <rect x="43" y="15" width="8" height="3" rx="2" fill="white" opacity=".4"/>
+            <!-- 平成デコ: 星 -->
+            <polygon points="54,30 55.2,33.6 59,33.6 56,35.8 57.2,39.4 54,37.2 50.8,39.4 52,35.8 49,33.6 52.8,33.6" fill="#FFE135" opacity=".85" filter="url(#sgGlow)"/>
+            <!-- フラッシュマーク -->
+            <polygon points="14,30 11,36 14.5,36 11.5,42 18,34 14,34" fill="#FFE135" opacity=".8"/>
+          </svg>
+        </div>
       </div>
     </div>
     <div class="thumbs" id="thumbRow"></div>
+    <!-- ズームスライダー -->
+    <div class="zoom-row">
+      <span class="zoom-label">ズーム</span>
+      <input type="range" class="zslider" id="zoomSlider" min="1" max="4" step="0.1" value="1">
+      <span class="zoom-val" id="zoomVal">x1.0</span>
+    </div>
     <div class="timer-row">
       <span class="timer-label">タイマー</span>
       <div class="timer-toggle">
@@ -353,7 +400,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 
   <div class="nav-row">
-    <button class="nbtn" onclick="goPanel(1)">撮り直す</button>
+    <button class="nbtn" onclick="resetAndShoot()">撮り直す</button>
     <button class="nbtn next" onclick="goPanel(3)">プリントへ</button>
   </div>
 </div>
@@ -625,6 +672,7 @@ const ST={
   frame:'heart',
   useTimer:true,
   moru:true,
+  zoom:1.0,
   photosTaken:0,
   photos:[null,null,null,null],
   rawPhotos:[null,null,null,null],
@@ -722,12 +770,35 @@ function setCamSize(){
 async function initCam(){
   buildThumbs();
   setCamSize();
+  // ズームスライダー初期化
+  const zs=document.getElementById('zoomSlider');
+  if(zs){
+    zs.value=ST.zoom;
+    zs.addEventListener('input',()=>{
+      ST.zoom=parseFloat(zs.value);
+      document.getElementById('zoomVal').textContent=`x${ST.zoom.toFixed(1)}`;
+      applyVideoZoom();
+    });
+  }
   try{
     const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:960}},audio:false});
-    ST.stream=s;document.getElementById('videoEl').srcObject=s;
+    ST.stream=s;
+    const v=document.getElementById('videoEl');
+    v.srcObject=s;
+    // ネイティブズーム対応チェック（対応ブラウザのみ）
+    v.addEventListener('loadedmetadata',()=>applyVideoZoom());
   }catch(e){
     document.getElementById('camWrap').innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:10px;color:rgba(255,255,255,.5);font-size:.8rem;padding:16px;text-align:center">カメラへのアクセスが必要です。<br>ブラウザの設定でカメラを許可してください。<br><small style="opacity:.5">${e.message}</small></div>`;
   }
+}
+
+function applyVideoZoom(){
+  const v=document.getElementById('videoEl');
+  if(!v) return;
+  const z=ST.zoom;
+  // CSS transformでズーム（中央基点、ミラー反転も維持）
+  v.style.transform=`scaleX(-1) scale(${z})`;
+  // capturePhotoでは crop計算でズーム実現するためここはプレビューのみ
 }
 
 function buildThumbs(){
@@ -792,41 +863,48 @@ function applyMoru(srcCanvas){
   }
   ctx.putImageData(imgData,0,0);
 
-  // Step 2: 目元拡大（顔中心上部を球面レンズ変形）
-  // 顔の目があるあたり（中央横、上から35%）を中心に拡大
+  // Step 2: 目元拡大 — 2段階の球面レンズで目を大きく
+  // 第1レンズ：目全体エリア（顔中央上 35%）を大きく膨張
+  // 第2レンズ：さらに目の左右それぞれを個別に拡大
   const src2=ctx.getImageData(0,0,W,H);
   const dst=ctx.createImageData(W,H);
   const sd=src2.data, dd=dst.data;
 
-  // 拡大中心: 横中央、縦は35%の位置（目のあたり）
-  const cx=W*0.5, cy=H*0.35;
-  // 影響半径: 画像の小さい辺の38%
-  const R=Math.min(W,H)*0.38;
-  // 膨張強度（0〜1、小さいほど自然）
-  const strength=0.18;
+  // メインレンズ（目全体エリア）
+  const cx=W*0.5,  cy=H*0.32;   // 横中央・縦32%（目のあたり）
+  const R =Math.min(W,H)*0.40;  // 影響半径
+  const strength=0.34;           // 膨張強度（前の2倍弱）
+
+  // サブレンズ左目・右目（さらに局所拡大）
+  const lex=W*0.36, ley=H*0.31, leR=Math.min(W,H)*0.14, leS=0.22;
+  const rex=W*0.64, rey=H*0.31, reR=Math.min(W,H)*0.14, reS=0.22;
+
+  function lensDisplace(px,py,lcx,lcy,lR,lS){
+    const dx=px-lcx, dy=py-lcy;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist>=lR||dist===0) return{x:px,y:py};
+    const t=dist/lR;
+    const factor=1-lS*(1-t*t);
+    return{x:lcx+dx*factor, y:lcy+dy*factor};
+  }
 
   for(let y=0;y<H;y++){
     for(let x=0;x<W;x++){
-      const dx=x-cx, dy=y-cy;
-      const dist=Math.sqrt(dx*dx+dy*dy);
-      let sx=x, sy=y;
-      if(dist<R&&dist>0){
-        // 球面レンズ：中心ほど強く外に押し出し→サンプリング元を内側に引く
-        const t=dist/R;
-        const factor=1-strength*(1-t*t);
-        sx=cx+dx*factor;
-        sy=cy+dy*factor;
-      }
+      // メインレンズ
+      let p=lensDisplace(x,y,cx,cy,R,strength);
+      // 左目サブレンズ
+      p=lensDisplace(p.x,p.y,lex,ley,leR,leS);
+      // 右目サブレンズ
+      p=lensDisplace(p.x,p.y,rex,rey,reR,reS);
+
       // バイリニアサンプリング
-      const x0=Math.max(0,Math.min(W-1,Math.floor(sx)));
-      const y0=Math.max(0,Math.min(H-1,Math.floor(sy)));
-      const x1=Math.min(W-1,x0+1);
-      const y1=Math.min(H-1,y0+1);
+      const sx=Math.max(0,Math.min(W-1,p.x));
+      const sy=Math.max(0,Math.min(H-1,p.y));
+      const x0=Math.floor(sx), y0=Math.floor(sy);
+      const x1=Math.min(W-1,x0+1), y1=Math.min(H-1,y0+1);
       const fx=sx-x0, fy=sy-y0;
-      const i00=(y0*W+x0)*4;
-      const i10=(y0*W+x1)*4;
-      const i01=(y1*W+x0)*4;
-      const i11=(y1*W+x1)*4;
+      const i00=(y0*W+x0)*4, i10=(y0*W+x1)*4;
+      const i01=(y1*W+x0)*4, i11=(y1*W+x1)*4;
       const di=(y*W+x)*4;
       for(let c=0;c<4;c++){
         dd[di+c]=
@@ -846,6 +924,22 @@ function applyMoru(srcCanvas){
   ctx.globalCompositeOperation='source-over';
 
   return out;
+}
+
+function resetAndShoot(){
+  ST.photosTaken=0;
+  ST.photos=[null,null,null,null];
+  ST.rawPhotos=[null,null,null,null];
+  ST.decoData=[[],[],[],[]];
+  ST.shooting=false;
+  const sb=document.getElementById('shootBtn');
+  sb.disabled=false;
+  sb.querySelector('span').textContent=ST.useTimer?'シャッター！（3秒後に撮影）':'シャッター！';
+  document.getElementById('pctr').textContent='0 / 4 枚 撮影済み';
+  document.getElementById('goDecoBtn').disabled=true;
+  const csb=document.getElementById('camShutterBtn');
+  if(csb){csb.style.opacity='';csb.style.pointerEvents='';}
+  goPanel(1);
 }
 
 function startCD(){
@@ -869,12 +963,18 @@ function capturePhoto(){
   const cv=document.getElementById('capCv');
   const ctx=cv.getContext('2d');
   cv.width=ST.PW;cv.height=ST.PH;
-  // center-crop from video
+  // center-crop from video（ズーム反映）
   const vr=v.videoWidth/v.videoHeight;
   const pr=ST.PW/ST.PH;
   let sx=0,sy=0,sw=v.videoWidth,sh=v.videoHeight;
   if(vr>pr){sw=Math.round(sh*pr);sx=(v.videoWidth-sw)/2;}
   else{sh=Math.round(sw/pr);sy=(v.videoHeight-sh)/2;}
+  // ズーム：crop領域をz倍縮小して中央を拡大
+  const z=ST.zoom;
+  const sw2=Math.round(sw/z), sh2=Math.round(sh/z);
+  sx=Math.round(sx+(sw-sw2)/2);
+  sy=Math.round(sy+(sh-sh2)/2);
+  sw=sw2; sh=sh2;
   ctx.save();ctx.translate(ST.PW,0);ctx.scale(-1,1);
   ctx.drawImage(v,sx,sy,sw,sh,0,0,ST.PW,ST.PH);
   ctx.restore();
@@ -896,8 +996,13 @@ function capturePhoto(){
   document.getElementById('pctr').textContent=`${ST.photosTaken} / 4 枚 撮影済み`;
   ST.shooting=false;
   const sb=document.getElementById('shootBtn');
-  if(ST.photosTaken>=4){sb.disabled=true;sb.querySelector('span').textContent='4枚撮影完了！';document.getElementById('goDecoBtn').disabled=false;}
-  else sb.disabled=false;
+  if(ST.photosTaken>=4){
+    sb.disabled=true;
+    sb.querySelector('span').textContent='4枚撮影完了！';
+    document.getElementById('goDecoBtn').disabled=false;
+    const csb=document.getElementById('camShutterBtn');
+    if(csb) csb.style.opacity='0.3', csb.style.pointerEvents='none';
+  }else sb.disabled=false;
 }
 
 function reapplyFrameToAllPhotos(){
@@ -1266,7 +1371,7 @@ async function renderPrint(){
   ctx.font=`bold 10px 'Reggae One',sans-serif`;
   ctx.fillStyle='#FF3D9A';ctx.textAlign='center';
   ctx.shadowColor='#FF3D9A';ctx.shadowBlur=6;
-  ctx.fillText('★ PURIKURA STUDIO ★',SW/2,SH-PAD-10);
+  ctx.fillText('プリクラ初号機',SW/2,SH-PAD-10);
   ctx.shadowBlur=0;
   ctx.font=`7px 'DotGothic16',monospace`;
   ctx.fillStyle='rgba(255,255,255,.3)';
