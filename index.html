@@ -391,7 +391,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 
   <div class="card cy">
-    <div class="slabel">平成プリクラスタンプ</div>
+    <div class="slabel">スタンプ</div>
     <div class="stamp-grid" id="stampGrid"></div>
   </div>
 
@@ -452,221 +452,117 @@ const FONTS=[
 const BG_PRESETS=['#000000','#1A0033','#0D0826','#001a0d','#1a0a00','#3d0030','#00101a','#ffffff','#ffe5f0','#e5f0ff'];
 
 // ─────────────────────────────────
-// HEISEI PURIKURA STAMPS (10種)
+// STAMPS (10種)
 // ─────────────────────────────────
 const STAMPS=[
-  // 1. キラキラ星 (Kirakira Star) - 平成プリクラ定番
-  {name:'キラ星',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="ks1" cx="50%" cy="30%"><stop offset="0%" stop-color="#fffde0"/><stop offset="100%" stop-color="#FFE135"/></radialGradient>
-      <filter id="ksGlow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    </defs>
-    <polygon points="32,4 36,26 58,26 41,39 48,60 32,47 16,60 23,39 6,26 28,26" fill="url(#ks1)" filter="url(#ksGlow)" stroke="#FF6B1A" stroke-width="1"/>
-    <polygon points="32,12 35,26 48,26 38,34 42,46 32,39 22,46 26,34 16,26 29,26" fill="white" opacity=".5"/>
-    <!-- corner sparkles -->
-    <line x1="4" y1="4" x2="4" y2="12" stroke="#FFE135" stroke-width="2" stroke-linecap="round"/>
-    <line x1="0" y1="8" x2="8" y2="8" stroke="#FFE135" stroke-width="2" stroke-linecap="round"/>
-    <line x1="56" y1="52" x2="56" y2="60" stroke="#FF3D9A" stroke-width="2" stroke-linecap="round"/>
-    <line x1="52" y1="56" x2="60" y2="56" stroke="#FF3D9A" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="58" cy="10" r="2.5" fill="#00E5FF"/>
-    <circle cx="6" cy="56" r="2.5" fill="#B14AED"/>
+  // 1. シンプル星
+  {name:'スター',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="st1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFF5A0"/><stop offset="100%" stop-color="#FFB800"/></linearGradient></defs>
+    <polygon points="32,4 38,24 60,24 43,37 50,58 32,45 14,58 21,37 4,24 26,24" fill="url(#st1)" stroke="#E08000" stroke-width="1.5" stroke-linejoin="round"/>
+    <polygon points="32,13 36.5,25 50,25 39.5,32.5 43.5,45 32,37.5 20.5,45 24.5,32.5 14,25 27.5,25" fill="white" opacity=".35"/>
   </svg>`},
 
-  // 2. ハートバブル (Heart Bubble) - 吹き出しハート
-  {name:'ハート泡',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="hb1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF88CC"/><stop offset="100%" stop-color="#FF3D9A"/></linearGradient></defs>
-    <!-- bubble -->
-    <ellipse cx="32" cy="28" rx="26" ry="22" fill="url(#hb1)" opacity=".15" stroke="#FF3D9A" stroke-width="2"/>
-    <!-- heart inside -->
-    <path d="M32 36 C32 36 18 27 18 19 C18 14 22 11 27 12 C29 12.5 31 14 32 16 C33 14 35 12.5 37 12 C42 11 46 14 46 19 C46 27 32 36 32 36Z" fill="url(#hb1)" stroke="white" stroke-width="1.2"/>
-    <path d="M24 18 C24 15.5 26 13.5 29 14" stroke="rgba(255,255,255,.7)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <!-- tail -->
-    <path d="M20 46 L16 56 L26 50" fill="url(#hb1)" stroke="#FF3D9A" stroke-width="1.2" stroke-linejoin="round"/>
-    <!-- small hearts -->
-    <text x="50" y="14" font-size="8" fill="#FF3D9A" opacity=".8">♡</text>
-    <text x="4" y="18" font-size="6" fill="#FF88CC" opacity=".8">♡</text>
+  // 2. ハート
+  {name:'ハート',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="ht1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF88CC"/><stop offset="100%" stop-color="#FF1177"/></linearGradient></defs>
+    <path d="M32 54 C32 54 6 36 6 20 C6 12 12 7 20 8 C25 8.5 29 11.5 32 16 C35 11.5 39 8.5 44 8 C52 7 58 12 58 20 C58 36 32 54 32 54Z" fill="url(#ht1)" stroke="#CC0055" stroke-width="1.5"/>
+    <ellipse cx="21" cy="17" rx="6" ry="4" fill="white" opacity=".3" transform="rotate(-30,21,17)"/>
   </svg>`},
 
-  // 3. 虹アーチ (Rainbow Arch) - 平成カラフル
+  // 3. 虹
   {name:'にじ',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><filter id="raShadow"><feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="rgba(0,0,0,.3)"/></filter></defs>
-    <!-- Rainbow stripes -->
-    <path d="M6 52 Q32 4 58 52" fill="none" stroke="#FF0000" stroke-width="5" stroke-linecap="round" filter="url(#raShadow)"/>
-    <path d="M10 52 Q32 10 54 52" fill="none" stroke="#FF7700" stroke-width="4.5" stroke-linecap="round"/>
-    <path d="M14 52 Q32 16 50 52" fill="none" stroke="#FFEE00" stroke-width="4" stroke-linecap="round"/>
-    <path d="M18 52 Q32 22 46 52" fill="none" stroke="#00CC44" stroke-width="4" stroke-linecap="round"/>
-    <path d="M22 52 Q32 28 42 52" fill="none" stroke="#0088FF" stroke-width="4" stroke-linecap="round"/>
-    <path d="M26 52 Q32 34 38 52" fill="none" stroke="#8800FF" stroke-width="4" stroke-linecap="round"/>
-    <!-- clouds at base -->
-    <ellipse cx="12" cy="52" rx="8" ry="5" fill="white" opacity=".9"/>
-    <ellipse cx="8" cy="50" rx="5" ry="4" fill="white" opacity=".9"/>
-    <ellipse cx="52" cy="52" rx="8" ry="5" fill="white" opacity=".9"/>
-    <ellipse cx="56" cy="50" rx="5" ry="4" fill="white" opacity=".9"/>
-    <!-- stars -->
-    <text x="1" y="12" font-size="8" fill="#FFE135">★</text>
-    <text x="52" y="16" font-size="7" fill="#FF3D9A">★</text>
+    <path d="M8 50 Q32 6 56 50" fill="none" stroke="#FF3333" stroke-width="5" stroke-linecap="round"/>
+    <path d="M12 50 Q32 13 52 50" fill="none" stroke="#FF9900" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M16 50 Q32 20 48 50" fill="none" stroke="#FFEE00" stroke-width="4" stroke-linecap="round"/>
+    <path d="M20 50 Q32 27 44 50" fill="none" stroke="#33CC33" stroke-width="4" stroke-linecap="round"/>
+    <path d="M24 50 Q32 34 40 50" fill="none" stroke="#3399FF" stroke-width="4" stroke-linecap="round"/>
+    <path d="M28 50 Q32 40 36 50" fill="none" stroke="#9933FF" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="10" cy="50" rx="7" ry="5" fill="white"/>
+    <ellipse cx="54" cy="50" rx="7" ry="5" fill="white"/>
+    <ellipse cx="6" cy="48" rx="5" ry="4" fill="white"/>
+    <ellipse cx="58" cy="48" rx="5" ry="4" fill="white"/>
   </svg>`},
 
-  // 4. クマちゃん (Bear Face) - 平成プリクラ定番キャラ風
+  // 4. クマ（シンプル・リボンなし）
   {name:'クマ',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><radialGradient id="bf1" cx="40%" cy="30%"><stop offset="0%" stop-color="#f4c98e"/><stop offset="100%" stop-color="#d4934a"/></radialGradient></defs>
-    <!-- ears -->
-    <circle cx="16" cy="17" r="10" fill="url(#bf1)"/>
-    <circle cx="48" cy="17" r="10" fill="url(#bf1)"/>
-    <circle cx="16" cy="17" r="6" fill="#e8a070"/>
-    <circle cx="48" cy="17" r="6" fill="#e8a070"/>
-    <!-- face -->
-    <circle cx="32" cy="36" r="22" fill="url(#bf1)"/>
-    <circle cx="36" cy="30" r="11" fill="rgba(255,255,255,.12)"/>
-    <!-- eyes -->
-    <ellipse cx="24" cy="30" rx="4" ry="4.5" fill="#1a0010"/>
-    <ellipse cx="40" cy="30" rx="4" ry="4.5" fill="#1a0010"/>
-    <circle cx="25.5" cy="28.5" r="1.5" fill="white"/>
-    <circle cx="41.5" cy="28.5" r="1.5" fill="white"/>
-    <!-- nose/mouth -->
-    <ellipse cx="32" cy="38" rx="5" ry="3.5" fill="#c06040"/>
-    <path d="M27 41 Q32 46 37 41" fill="none" stroke="#1a0010" stroke-width="1.5" stroke-linecap="round"/>
-    <!-- cheeks -->
-    <ellipse cx="18" cy="40" rx="6" ry="4" fill="#FF88CC" opacity=".55"/>
-    <ellipse cx="46" cy="40" rx="6" ry="4" fill="#FF88CC" opacity=".55"/>
-    <!-- ribbon on ear -->
-    <path d="M45 9 L48 13 L51 9 L48 7 Z" fill="#FF3D9A"/>
-    <circle cx="48" cy="11" r="1.5" fill="white"/>
+    <defs><radialGradient id="br1" cx="40%" cy="30%"><stop offset="0%" stop-color="#F5D5A0"/><stop offset="100%" stop-color="#D4934A"/></radialGradient></defs>
+    <circle cx="16" cy="20" r="10" fill="url(#br1)"/>
+    <circle cx="48" cy="20" r="10" fill="url(#br1)"/>
+    <circle cx="16" cy="20" r="6" fill="#C07840"/>
+    <circle cx="48" cy="20" r="6" fill="#C07840"/>
+    <circle cx="32" cy="36" r="22" fill="url(#br1)"/>
+    <ellipse cx="24" cy="30" rx="4" ry="4.5" fill="#1A0010"/>
+    <ellipse cx="40" cy="30" rx="4" ry="4.5" fill="#1A0010"/>
+    <circle cx="25.5" cy="28.5" r="1.8" fill="white"/>
+    <circle cx="41.5" cy="28.5" r="1.8" fill="white"/>
+    <ellipse cx="32" cy="39" rx="5" ry="3.5" fill="#A05030"/>
+    <path d="M27 43 Q32 48 37 43" fill="none" stroke="#1A0010" stroke-width="1.8" stroke-linecap="round"/>
+    <ellipse cx="19" cy="41" rx="6" ry="3.5" fill="#FF99BB" opacity=".55"/>
+    <ellipse cx="45" cy="41" rx="6" ry="3.5" fill="#FF99BB" opacity=".55"/>
   </svg>`},
 
-  // 5. 流れ星＋軌跡 (Shooting Star Trail)
+  // 5. 流れ星
   {name:'流れ星',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="ss1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B14AED"/><stop offset="100%" stop-color="transparent"/></linearGradient>
-      <linearGradient id="ss2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00E5FF"/><stop offset="100%" stop-color="transparent"/></linearGradient>
+      <linearGradient id="ss1" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFE135" stop-opacity="1"/><stop offset="100%" stop-color="#FFE135" stop-opacity="0"/></linearGradient>
     </defs>
-    <!-- trails -->
-    <path d="M8 56 L44 20" stroke="url(#ss1)" stroke-width="4" stroke-linecap="round" opacity=".7"/>
-    <path d="M12 60 L46 24" stroke="url(#ss2)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-    <!-- star -->
-    <polygon points="46,10 49,20 59,20 51,26 54,36 46,30 38,36 41,26 33,20 43,20" fill="#FFE135" stroke="#FF6B1A" stroke-width="1.2" stroke-linejoin="round"/>
-    <polygon points="46,14 48.5,21 55,21 50,25 52,31 46,27 40,31 42,25 37,21 43.5,21" fill="white" opacity=".5"/>
-    <!-- sparkles on trail -->
-    <line x1="20" y1="48" x2="20" y2="54" stroke="#FFE135" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="17" y1="51" x2="23" y2="51" stroke="#FFE135" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="30" y1="38" x2="30" y2="42" stroke="#FF3D9A" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="28" y1="40" x2="32" y2="40" stroke="#FF3D9A" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="52" y1="12" x2="8" y2="56" stroke="url(#ss1)" stroke-width="4" stroke-linecap="round"/>
+    <line x1="50" y1="16" x2="12" y2="54" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+    <polygon points="52,4 55,14 65,14 57,20 60,30 52,24 44,30 47,20 39,14 49,14" fill="#FFE135" stroke="#FF9900" stroke-width="1.2" stroke-linejoin="round"/>
+    <polygon points="52,9 54,15 61,15 55.5,19 57.5,25 52,21 46.5,25 48.5,19 43,15 50,15" fill="white" opacity=".4"/>
   </svg>`},
 
-  // 6. りぼん＆ハート (Ribbon & Heart) - 平成乙女スタンプ
-  {name:'リボン♡',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="rh2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF3D9A"/><stop offset="100%" stop-color="#B14AED"/></linearGradient>
-      <linearGradient id="rh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF88CC"/><stop offset="100%" stop-color="#FF3D9A"/></linearGradient>
-    </defs>
-    <!-- ribbon left wings -->
-    <path d="M32 24 L6 10 Q14 18 14 26 Q14 32 6 36 L32 28 Z" fill="url(#rh2)"/>
-    <path d="M32 24 L58 10 Q50 18 50 26 Q50 32 58 36 L32 28 Z" fill="url(#rh2)"/>
-    <!-- ribbon knot -->
-    <ellipse cx="32" cy="26" rx="7" ry="6" fill="url(#rh3)" stroke="white" stroke-width="1.5"/>
-    <!-- heart below -->
-    <path d="M32 46 C32 46 20 38 20 31 C20 27 23 24 27 25 C29 25.5 31 27 32 29 C33 27 35 25.5 37 25 C41 24 44 27 44 31 C44 38 32 46 32 46Z" fill="url(#rh3)" stroke="white" stroke-width="1.2"/>
-    <path d="M24 30 C24 27.5 26.5 25.5 29 26" stroke="rgba(255,255,255,.7)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-    <!-- decorative dots -->
-    <circle cx="10" cy="8" r="2.5" fill="#FFE135"/>
-    <circle cx="54" cy="8" r="2.5" fill="#FFE135"/>
-    <circle cx="10" cy="48" r="2" fill="#FF3D9A"/>
-    <circle cx="54" cy="48" r="2" fill="#FF3D9A"/>
+  // 6. リボン
+  {name:'リボン',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="rb1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FF55AA"/><stop offset="100%" stop-color="#CC22FF"/></linearGradient></defs>
+    <path d="M32 32 L6 16 Q14 22 14 32 Q14 40 6 46 L32 34Z" fill="url(#rb1)"/>
+    <path d="M32 32 L58 16 Q50 22 50 32 Q50 40 58 46 L32 34Z" fill="url(#rb1)"/>
+    <ellipse cx="32" cy="33" rx="7" ry="6" fill="#FF88CC" stroke="white" stroke-width="1.5"/>
+    <ellipse cx="32" cy="33" rx="3.5" ry="3" fill="#FF3399"/>
+    <ellipse cx="30.5" cy="31.5" rx="1.5" ry="1" fill="white" opacity=".6"/>
   </svg>`},
 
-  // 7. 電話＆ハート (Phone & Heart) - 平成の「電話して♡」
-  {name:'てる',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="ph1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B14AED"/><stop offset="100%" stop-color="#00E5FF"/></linearGradient></defs>
-    <!-- phone body -->
-    <rect x="18" y="8" width="28" height="44" rx="6" fill="url(#ph1)" stroke="white" stroke-width="1.5"/>
-    <rect x="22" y="14" width="20" height="26" rx="3" fill="white" opacity=".15"/>
-    <rect x="22" y="14" width="20" height="26" rx="3" fill="none" stroke="white" stroke-width="1" opacity=".5"/>
-    <!-- screen content: heart -->
-    <path d="M32 30 C32 30 24 24 24 19 C24 16 26 14 29 15 C30.5 15.5 31.5 16.5 32 18 C32.5 16.5 33.5 15.5 35 15 C38 14 40 16 40 19 C40 24 32 30 32 30Z" fill="#FF3D9A"/>
-    <!-- home button -->
-    <circle cx="32" cy="46" r="3" fill="white" opacity=".5" stroke="white" stroke-width="1"/>
-    <!-- speaker -->
-    <rect x="27" y="10" width="10" height="2" rx="1" fill="white" opacity=".4"/>
-    <!-- floating hearts -->
-    <text x="44" y="18" font-size="9" fill="#FF3D9A" opacity=".9">♡</text>
-    <text x="46" y="30" font-size="7" fill="#FFE135" opacity=".7">♡</text>
-    <text x="8" y="22" font-size="8" fill="#FF88CC" opacity=".8">♡</text>
+  // 7. 桜
+  {name:'さくら',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><radialGradient id="sk1" cx="40%" cy="30%"><stop offset="0%" stop-color="#FFDDEE"/><stop offset="100%" stop-color="#FF99BB"/></radialGradient></defs>
+    <ellipse cx="32" cy="18" rx="8" ry="13" fill="url(#sk1)" stroke="#FF6699" stroke-width="1"/>
+    <ellipse cx="32" cy="18" rx="8" ry="13" fill="url(#sk1)" stroke="#FF6699" stroke-width="1" transform="rotate(72,32,32)"/>
+    <ellipse cx="32" cy="18" rx="8" ry="13" fill="url(#sk1)" stroke="#FF6699" stroke-width="1" transform="rotate(144,32,32)"/>
+    <ellipse cx="32" cy="18" rx="8" ry="13" fill="url(#sk1)" stroke="#FF6699" stroke-width="1" transform="rotate(216,32,32)"/>
+    <ellipse cx="32" cy="18" rx="8" ry="13" fill="url(#sk1)" stroke="#FF6699" stroke-width="1" transform="rotate(288,32,32)"/>
+    <circle cx="32" cy="32" r="7" fill="#FFE135" stroke="#E09900" stroke-width="1"/>
+    <circle cx="32" cy="32" r="3.5" fill="#FF9900"/>
   </svg>`},
 
-  // 8. お花＆葉っぱ (Flower & Leaves) - ナチュラル系プリクラ
-  {name:'おはな',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="fl1" cx="50%" cy="30%"><stop offset="0%" stop-color="#fffde0"/><stop offset="100%" stop-color="#FFE135"/></radialGradient>
-      <radialGradient id="fl2"><stop offset="0%" stop-color="#FF88CC"/><stop offset="100%" stop-color="#FF3D9A"/></radialGradient>
-    </defs>
-    <!-- leaves -->
-    <ellipse cx="14" cy="46" rx="10" ry="6" fill="#39FF14" opacity=".8" transform="rotate(-30,14,46)"/>
-    <ellipse cx="50" cy="46" rx="10" ry="6" fill="#39FF14" opacity=".8" transform="rotate(30,50,46)"/>
-    <ellipse cx="10" cy="34" rx="8" ry="5" fill="#2ecc40" opacity=".7" transform="rotate(-50,10,34)"/>
-    <!-- petals -->
-    <ellipse cx="32" cy="18" rx="7" ry="12" fill="url(#fl2)" opacity=".9"/>
-    <ellipse cx="32" cy="18" rx="7" ry="12" fill="url(#fl2)" opacity=".9" transform="rotate(45,32,32)"/>
-    <ellipse cx="32" cy="18" rx="7" ry="12" fill="url(#fl2)" opacity=".9" transform="rotate(90,32,32)"/>
-    <ellipse cx="32" cy="18" rx="7" ry="12" fill="url(#fl2)" opacity=".9" transform="rotate(135,32,32)"/>
-    <!-- center -->
-    <circle cx="32" cy="32" r="9" fill="url(#fl1)"/>
-    <circle cx="32" cy="32" r="5" fill="#FF6B1A" opacity=".7"/>
-    <circle cx="34" cy="30" r="2" fill="white" opacity=".6"/>
-    <!-- small buds -->
-    <circle cx="52" cy="20" r="5" fill="#FF88CC" stroke="white" stroke-width="1"/>
-    <circle cx="13" cy="18" r="4" fill="#FFE135" stroke="white" stroke-width="1"/>
+  // 8. 音符
+  {name:'音符',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="nt1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#88DDFF"/><stop offset="100%" stop-color="#6633FF"/></linearGradient></defs>
+    <ellipse cx="20" cy="50" rx="9" ry="6.5" fill="url(#nt1)" transform="rotate(-15,20,50)"/>
+    <ellipse cx="44" cy="44" rx="9" ry="6.5" fill="url(#nt1)" transform="rotate(-15,44,44)"/>
+    <line x1="28" y1="48" x2="28" y2="14" stroke="url(#nt1)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="52" y1="42" x2="52" y2="10" stroke="url(#nt1)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="28" y1="14" x2="52" y2="10" stroke="url(#nt1)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="28" y1="22" x2="52" y2="18" stroke="url(#nt1)" stroke-width="2.5" stroke-linecap="round"/>
   </svg>`},
 
-  // 9. 魔法少女ステッキ (Mahou Shoujo Stick)
-  {name:'魔法☆',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="mg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFE135"/><stop offset="100%" stop-color="#B14AED"/></linearGradient>
-      <linearGradient id="mg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF3D9A"/><stop offset="100%" stop-color="#B14AED"/></linearGradient>
-      <filter id="mgGlow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    </defs>
-    <!-- stick -->
-    <line x1="16" y1="54" x2="48" y2="18" stroke="url(#mg1)" stroke-width="4" stroke-linecap="round"/>
-    <line x1="16" y1="54" x2="48" y2="18" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round"/>
-    <!-- star top -->
-    <polygon points="48,4 51,14 61,14 53,20 56,30 48,24 40,30 43,20 35,14 45,14" fill="#FFE135" stroke="#FF6B1A" stroke-width="1.2" stroke-linejoin="round" filter="url(#mgGlow)"/>
-    <polygon points="48,8 50.5,15 58,15 52,19 54.5,26 48,22 41.5,26 44,19 38,15 45.5,15" fill="white" opacity=".45"/>
-    <!-- heart gem on stick -->
-    <path d="M26 38 C26 38 19 33 19 28.5 C19 26 21 24 24 25 C25 25.3 25.7 26 26 27 C26.3 26 27 25.3 28 25 C31 24 33 26 33 28.5 C33 33 26 38 26 38Z" fill="url(#mg2)" stroke="white" stroke-width="1" filter="url(#mgGlow)"/>
-    <!-- wand ball -->
-    <circle cx="16" cy="54" r="5" fill="url(#mg2)" stroke="white" stroke-width="1.5" filter="url(#mgGlow)"/>
-    <circle cx="17.5" cy="52.5" r="1.8" fill="white" opacity=".6"/>
-    <!-- sparkles -->
-    <line x1="6" y1="30" x2="6" y2="38" stroke="#FFE135" stroke-width="1.8" stroke-linecap="round"/>
-    <line x1="2" y1="34" x2="10" y2="34" stroke="#FFE135" stroke-width="1.8" stroke-linecap="round"/>
-    <line x1="56" y1="40" x2="56" y2="46" stroke="#FF3D9A" stroke-width="1.8" stroke-linecap="round"/>
-    <line x1="53" y1="43" x2="59" y2="43" stroke="#FF3D9A" stroke-width="1.8" stroke-linecap="round"/>
-    <circle cx="10" cy="16" r="2.5" fill="#00E5FF"/>
-    <circle cx="58" cy="52" r="2" fill="#FFE135"/>
+  // 9. 電撃
+  {name:'かみなり',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="lt1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFF5A0"/><stop offset="100%" stop-color="#FFB800"/></linearGradient></defs>
+    <polygon points="38,4 20,34 31,34 26,60 46,28 35,28" fill="url(#lt1)" stroke="#E08000" stroke-width="1.5" stroke-linejoin="round"/>
+    <polygon points="38,10 24,32 33,32 29,52 43,30 34,30" fill="white" opacity=".3"/>
   </svg>`},
 
-  // 10. ギャル文字フレーム (Gyaru Text Frame) - "LOVE"
-  {name:'LOVE★',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="lv1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF3D9A"/><stop offset="50%" stop-color="#FFE135"/><stop offset="100%" stop-color="#00E5FF"/></linearGradient>
-    </defs>
-    <!-- outer star burst frame -->
-    <polygon points="32,2 35,12 44,6 40,16 52,14 46,23 58,26 49,31 56,42 45,38 46,51 37,44 32,56 27,44 18,51 19,38 8,42 15,31 6,26 18,23 14,14 26,16 24,6 33,12" fill="#FF3D9A" opacity=".18"/>
-    <!-- inner circle bg -->
-    <circle cx="32" cy="32" r="20" fill="url(#lv1)" opacity=".12" stroke="url(#lv1)" stroke-width="1.5"/>
-    <!-- LOVE text -->
-    <text x="32" y="29" font-family="'Reggae One',sans-serif" font-size="11" font-weight="900" fill="url(#lv1)" text-anchor="middle" stroke="rgba(0,0,0,.3)" stroke-width="0.5">LOVE</text>
-    <!-- heart -->
-    <path d="M32 40 C32 40 25 35 25 30.5 C25 28 27 26 30 27 C31 27.3 31.5 28 32 29 C32.5 28 33 27.3 34 27 C37 26 39 28 39 30.5 C39 35 32 40 32 40Z" fill="url(#lv1)"/>
-    <!-- corner stars -->
-    <text x="3" y="14" font-size="9" fill="#FFE135">★</text>
-    <text x="50" y="14" font-size="9" fill="#FF3D9A">★</text>
-    <text x="3" y="58" font-size="9" fill="#00E5FF">★</text>
-    <text x="50" y="58" font-size="9" fill="#B14AED">★</text>
-    <!-- dots -->
-    <circle cx="32" cy="6" r="2" fill="#FF3D9A"/>
-    <circle cx="32" cy="58" r="2" fill="#FFE135"/>
-    <circle cx="6" cy="32" r="2" fill="#00E5FF"/>
-    <circle cx="58" cy="32" r="2" fill="#B14AED"/>
+  // 10. 王冠
+  {name:'おうかん',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="cr1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFF5A0"/><stop offset="100%" stop-color="#FFB800"/></linearGradient></defs>
+    <polygon points="8,50 8,26 20,40 32,14 44,40 56,26 56,50" fill="url(#cr1)" stroke="#C08000" stroke-width="2" stroke-linejoin="round"/>
+    <rect x="8" y="50" width="48" height="9" rx="4" fill="url(#cr1)" stroke="#C08000" stroke-width="2"/>
+    <circle cx="20" cy="41" r="4" fill="#FF3399" stroke="#CC0066" stroke-width="1"/>
+    <circle cx="32" cy="20" r="4.5" fill="#33AAFF" stroke="#0066CC" stroke-width="1"/>
+    <circle cx="44" cy="41" r="4" fill="#33CC33" stroke="#009900" stroke-width="1"/>
+    <ellipse cx="19" cy="39.5" rx="1.5" ry="1" fill="white" opacity=".6"/>
+    <ellipse cx="31" cy="18.5" rx="1.8" ry="1.2" fill="white" opacity=".6"/>
+    <ellipse cx="43" cy="39.5" rx="1.5" ry="1" fill="white" opacity=".6"/>
   </svg>`},
 ];
 
