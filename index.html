@@ -350,6 +350,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <button class="fbtn" data-frame="cyber">サイバー</button>
       <button class="fbtn" data-frame="none">なし</button>
     </div>
+    <div class="moru-row" style="margin-top:8px;margin-bottom:0;">
+      <span class="moru-label">盛れる</span>
+      <div class="moru-toggle">
+        <button class="mbtn sel" id="decoMoruOn" onclick="setDecoMoru(true)">ON</button>
+        <button class="mbtn" id="decoMoruOff" onclick="setDecoMoru(false)">OFF</button>
+      </div>
+    </div>
   </div>
 
   <div class="card cy">
@@ -672,6 +679,7 @@ const ST={
   frame:'heart',
   useTimer:true,
   moru:true,
+  decoMoru:true,
   zoom:1.0,
   photosTaken:0,
   photos:[null,null,null,null],
@@ -767,10 +775,35 @@ function setCamSize(){
   });
 }
 
+async function startStream(){
+  const v=document.getElementById('videoEl');
+  if(!v) return;
+  if(ST.stream) return; // すでに起動中
+  try{
+    const s=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:'user',width:{ideal:1280},height:{ideal:960}},
+      audio:false
+    });
+    ST.stream=s;
+    v.srcObject=s;
+    v.addEventListener('loadedmetadata',()=>applyVideoZoom(),{once:true});
+  }catch(e){
+    const cw=document.getElementById('camWrap');
+    if(cw) cw.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:10px;color:rgba(255,255,255,.5);font-size:.8rem;padding:16px;text-align:center">カメラへのアクセスが必要です。<br>ブラウザの設定でカメラを許可してください。<br><small style="opacity:.5">${e.message}</small></div>`;
+  }
+}
+
+function stopStream(){
+  if(!ST.stream) return;
+  ST.stream.getTracks().forEach(t=>t.stop());
+  ST.stream=null;
+  const v=document.getElementById('videoEl');
+  if(v) v.srcObject=null;
+}
+
 async function initCam(){
   buildThumbs();
   setCamSize();
-  // ズームスライダー初期化
   const zs=document.getElementById('zoomSlider');
   if(zs){
     zs.value=ST.zoom;
@@ -780,16 +813,7 @@ async function initCam(){
       applyVideoZoom();
     });
   }
-  try{
-    const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:960}},audio:false});
-    ST.stream=s;
-    const v=document.getElementById('videoEl');
-    v.srcObject=s;
-    // ネイティブズーム対応チェック（対応ブラウザのみ）
-    v.addEventListener('loadedmetadata',()=>applyVideoZoom());
-  }catch(e){
-    document.getElementById('camWrap').innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:10px;color:rgba(255,255,255,.5);font-size:.8rem;padding:16px;text-align:center">カメラへのアクセスが必要です。<br>ブラウザの設定でカメラを許可してください。<br><small style="opacity:.5">${e.message}</small></div>`;
-  }
+  await startStream();
 }
 
 function applyVideoZoom(){
@@ -835,6 +859,14 @@ function setMoru(on){
   document.getElementById('moruOff').classList.toggle('sel',!on);
 }
 
+function setDecoMoru(on){
+  ST.decoMoru=on;
+  document.getElementById('decoMoruOn').classList.toggle('sel',on);
+  document.getElementById('decoMoruOff').classList.toggle('sel',!on);
+  // 全4枚を再描画
+  for(let i=0;i<4;i++) renderDecoByIdx(i);
+}
+
 // ─────────────────────────────────
 // 盛れる処理（肌を白く・きれいに）
 // ─────────────────────────────────
@@ -851,32 +883,38 @@ function applyMoru(srcCanvas){
   for(let i=0;i<d.length;i+=4){
     const r=d[i], g=d[i+1], b=d[i+2];
 
-    // 肌色判定（暖色系・広め）
-    const isSkin=(r>80 && g>50 && b>30 && r>b && r>g*0.85 && r<252);
+    // 肌色判定（より厳しく絞る）
+    // - R が最大チャンネルであること
+    // - R-G, R-B の差が一定範囲内（肌らしい暖かみ）
+    // - 極端に暗い／明るいピクセルは除外
+    const rg=r-g, rb=r-b;
+    const isSkin=(
+      r>130 && g>80 && b>60 &&   // 最低輝度
+      r<240 &&                    // 飽和ピクセル除外
+      r>g && r>b &&               // R が最大
+      rg>10 && rg<80 &&           // 赤みが強すぎず弱すぎず
+      rb>20 && rb<120 &&          // 青みが抑えられている
+      b < 180                     // 青が強い色（空・服など）を除外
+    );
 
     if(isSkin){
-      // 明るさを上げて白く
-      const bright=40;
+      // マイルドに明るく・白く（効果を控えめに）
+      const bright=18;
+      const sat=0.75; // 1=変化なし → 0=完全に白。0.75=25%だけ白に寄せる
       const nr=Math.min(255, r+bright);
-      const ng=Math.min(255, g+bright*0.85);
-      const nb=Math.min(255, b+bright*0.75);
-      // 彩度を少し下げてさらに白っぽく（元色と白の中間に近づける）
-      const sat=0.55; // 0=完全に白、1=元のまま
+      const ng=Math.min(255, g+bright*0.8);
+      const nb=Math.min(255, b+bright*0.6);
       d[i]  =Math.round(nr*sat + 255*(1-sat));
       d[i+1]=Math.round(ng*sat + 255*(1-sat));
       d[i+2]=Math.round(nb*sat + 255*(1-sat));
-    } else {
-      // 非肌色も全体的に少し明るく（背景含め自然に）
-      d[i]  =Math.min(255, r+10);
-      d[i+1]=Math.min(255, g+10);
-      d[i+2]=Math.min(255, b+10);
     }
+    // 非肌色はそのまま（余計な明度変更をしない）
   }
   ctx.putImageData(imgData,0,0);
 
-  // 仕上げ：全体にやわらかい白みを薄くのせる
+  // 仕上げ：ごく薄い白みを全体にのせる
   ctx.globalCompositeOperation='screen';
-  ctx.fillStyle='rgba(255,245,250,0.10)';
+  ctx.fillStyle='rgba(255,245,250,0.06)';
   ctx.fillRect(0,0,W,H);
   ctx.globalCompositeOperation='source-over';
 
@@ -884,16 +922,21 @@ function applyMoru(srcCanvas){
 }
 
 function resetAndShoot(){
+  stopStream(); // 一旦停止してからパネル1で再起動
   ST.photosTaken=0;
   ST.photos=[null,null,null,null];
   ST.rawPhotos=[null,null,null,null];
   ST.decoData=[[],[],[],[]];
   ST.shooting=false;
   const sb=document.getElementById('shootBtn');
-  sb.disabled=false;
-  sb.querySelector('span').textContent=ST.useTimer?'シャッター！（3秒後に撮影）':'シャッター！';
-  document.getElementById('pctr').textContent='0 / 4 枚 撮影済み';
-  document.getElementById('goDecoBtn').disabled=true;
+  if(sb){
+    sb.disabled=false;
+    sb.querySelector('span').textContent=ST.useTimer?'シャッター！（3秒後に撮影）':'シャッター！';
+  }
+  const pc=document.getElementById('pctr');
+  if(pc) pc.textContent='0 / 4 枚 撮影済み';
+  const gd=document.getElementById('goDecoBtn');
+  if(gd) gd.disabled=true;
   const csb=document.getElementById('camShutterBtn');
   if(csb){csb.style.opacity='';csb.style.pointerEvents='';}
   goPanel(1);
@@ -1006,22 +1049,23 @@ function updateThumb(idx,url){
 // PANEL NAV
 // ─────────────────────────────────
 function goPanel(n){
-  if(n===1&&ST.panel===0){initCam();}
+  // パネル1を離れるときカメラ停止
+  if(ST.panel===1 && n!==1) stopStream();
+  // パネル1に入るときカメラ起動
+  if(n===1 && ST.panel!==1) initCam();
   ST.panel=n;
-  // show/hide panels by ID
   for(let i=0;i<=3;i++){
     const p=document.getElementById(`p${i}`);
     if(p) p.classList.toggle('active',i===n);
   }
-  // update step indicators
   ['s0','s1','s2','s3'].forEach((id,i)=>{
     const el=document.getElementById(id);
     if(!el) return;
     el.classList.toggle('active',i===n);
     el.classList.toggle('done',i<n);
   });
-  if(n===2)initDecoPanel();
-  if(n===3)renderPrint();
+  if(n===2) initDecoPanel();
+  if(n===3) renderPrint();
 }
 
 // ─────────────────────────────────
@@ -1045,6 +1089,8 @@ function initDecoPanel(){
     reapplyFrameToAllPhotos();
   });
   syncDecoFramePicker();
+  document.getElementById('decoMoruOn').classList.toggle('sel',ST.decoMoru);
+  document.getElementById('decoMoruOff').classList.toggle('sel',!ST.decoMoru);
 }
 
 function buildPhotoDots(){
@@ -1170,14 +1216,45 @@ function onDM(e){
 
 function onDE(){ST.dragging=null;}
 
+
+// rawPhoto に decoMoru を適用した画像URLを返す（Promise）
+function getMoruPhotoUrl(idx){
+  return new Promise(resolve=>{
+    const src=ST.rawPhotos[idx];
+    if(!src){resolve(null);return;}
+    const img=new Image();
+    img.onload=()=>{
+      const cv=document.createElement('canvas');
+      cv.width=ST.PW;cv.height=ST.PH;
+      const ctx=cv.getContext('2d');
+      ctx.drawImage(img,0,0,ST.PW,ST.PH);
+      if(ST.decoMoru){
+        const moruCv=applyMoru(cv);
+        ctx.clearRect(0,0,ST.PW,ST.PH);
+        ctx.drawImage(moruCv,0,0);
+      }
+      drawFrame(ctx,ST.PW,ST.PH,ST.frame);
+      resolve(cv.toDataURL('image/png'));
+    };
+    img.src=src;
+  });
+}
+
+function renderDecoByIdx(idx){
+  // 指定indexのcanvasを再描画（decoMoru反映）
+  // curPhotoのときだけ#decoCanvasに描く
+  if(idx!==ST.curPhoto) return;
+  renderDecoCv();
+}
+
 function renderDecoCv(){
   const cv=document.getElementById('decoCanvas');if(!cv)return;
   const ctx=cv.getContext('2d');
   const idx=ST.curPhoto;
   ctx.clearRect(0,0,ST.PW,ST.PH);
-  // BG
   ctx.fillStyle=ST.bgColors[idx]||'#000';
   ctx.fillRect(0,0,ST.PW,ST.PH);
+
   const drawDecos=()=>{
     ST.decoData[idx].forEach((item,i)=>{
       ctx.save();
@@ -1209,10 +1286,15 @@ function renderDecoCv(){
       ctx.restore();
     });
   };
-  if(ST.photos[idx]){
-    const img=new Image();
-    img.onload=()=>{ctx.drawImage(img,0,0,ST.PW,ST.PH);drawDecos();};
-    img.src=ST.photos[idx];
+
+  // rawPhotos から decoMoru 適用済み画像を使う
+  if(ST.rawPhotos[idx]){
+    getMoruPhotoUrl(idx).then(url=>{
+      if(!url){drawDecos();return;}
+      const img=new Image();
+      img.onload=()=>{ctx.drawImage(img,0,0,ST.PW,ST.PH);drawDecos();};
+      img.src=url;
+    });
   } else drawDecos();
 }
 const var_cy='#00E5FF';
@@ -1282,11 +1364,15 @@ function getDecoSnapshot(idx){
       });
       resolve(cv);
     };
-    if(ST.photos[idx]){
-      const img=new Image();
-      img.onload=()=>{ctx.drawImage(img,0,0,ST.PW,ST.PH);drawDecos();};
-      img.src=ST.photos[idx];
-    } else drawDecos();
+    // rawPhotos + decoMoru を使って描画
+    getMoruPhotoUrl(idx).then(url=>{
+      const src=url||ST.photos[idx];
+      if(src){
+        const img=new Image();
+        img.onload=()=>{ctx.drawImage(img,0,0,ST.PW,ST.PH);drawDecos();};
+        img.src=src;
+      } else drawDecos();
+    });
   });
 }
 
