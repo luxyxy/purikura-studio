@@ -501,15 +501,22 @@ const STAMPS=[
     <ellipse cx="45" cy="41" rx="6" ry="3.5" fill="#FF99BB" opacity=".55"/>
   </svg>`},
 
-  // 5. 流れ星
-  {name:'流れ星',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="ss1" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFE135" stop-opacity="1"/><stop offset="100%" stop-color="#FFE135" stop-opacity="0"/></linearGradient>
-    </defs>
-    <line x1="52" y1="12" x2="8" y2="56" stroke="url(#ss1)" stroke-width="4" stroke-linecap="round"/>
-    <line x1="50" y1="16" x2="12" y2="54" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
-    <polygon points="52,4 55,14 65,14 57,20 60,30 52,24 44,30 47,20 39,14 49,14" fill="#FFE135" stroke="#FF9900" stroke-width="1.2" stroke-linejoin="round"/>
-    <polygon points="52,9 54,15 61,15 55.5,19 57.5,25 52,21 46.5,25 48.5,19 43,15 50,15" fill="white" opacity=".4"/>
+  // 5. コーヒー
+  {name:'コーヒー',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="cf1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8B5C2A"/><stop offset="100%" stop-color="#4B2800"/></linearGradient></defs>
+    <!-- ソーサー -->
+    <ellipse cx="32" cy="54" rx="22" ry="5" fill="#C8903A" stroke="#8B5C2A" stroke-width="1.5"/>
+    <!-- カップ本体 -->
+    <path d="M14 28 L18 52 Q32 56 46 52 L50 28 Z" fill="url(#cf1)" stroke="#3A1800" stroke-width="1.5" stroke-linejoin="round"/>
+    <!-- カップ内側（液面） -->
+    <ellipse cx="32" cy="28" rx="18" ry="5" fill="#6B3A18" stroke="#3A1800" stroke-width="1"/>
+    <ellipse cx="32" cy="28" rx="14" ry="3.5" fill="#C87040" opacity=".6"/>
+    <!-- 取っ手 -->
+    <path d="M50 32 Q62 32 62 42 Q62 50 50 48" fill="none" stroke="#8B5C2A" stroke-width="4" stroke-linecap="round"/>
+    <!-- 湯気 -->
+    <path d="M24 20 Q26 14 24 8" fill="none" stroke="#CCCCCC" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+    <path d="M32 18 Q34 12 32 6" fill="none" stroke="#CCCCCC" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+    <path d="M40 20 Q42 14 40 8" fill="none" stroke="#CCCCCC" stroke-width="2" stroke-linecap="round" opacity=".7"/>
   </svg>`},
 
   // 6. リボン
@@ -534,15 +541,15 @@ const STAMPS=[
     <circle cx="32" cy="32" r="3.5" fill="#FF9900"/>
   </svg>`},
 
-  // 8. 音符
+  // 8. 音符（8分音符・青）
   {name:'音符',svg:`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="nt1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#88DDFF"/><stop offset="100%" stop-color="#6633FF"/></linearGradient></defs>
-    <ellipse cx="20" cy="50" rx="9" ry="6.5" fill="url(#nt1)" transform="rotate(-15,20,50)"/>
-    <ellipse cx="44" cy="44" rx="9" ry="6.5" fill="url(#nt1)" transform="rotate(-15,44,44)"/>
-    <line x1="28" y1="48" x2="28" y2="14" stroke="url(#nt1)" stroke-width="3" stroke-linecap="round"/>
-    <line x1="52" y1="42" x2="52" y2="10" stroke="url(#nt1)" stroke-width="3" stroke-linecap="round"/>
-    <line x1="28" y1="14" x2="52" y2="10" stroke="url(#nt1)" stroke-width="3" stroke-linecap="round"/>
-    <line x1="28" y1="22" x2="52" y2="18" stroke="url(#nt1)" stroke-width="2.5" stroke-linecap="round"/>
+    <defs><linearGradient id="nt1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#66CCFF"/><stop offset="100%" stop-color="#0055CC"/></linearGradient></defs>
+    <!-- 符頭（楕円） -->
+    <ellipse cx="22" cy="50" rx="11" ry="8" fill="url(#nt1)" transform="rotate(-20,22,50)"/>
+    <!-- 符幹 -->
+    <line x1="31" y1="46" x2="31" y2="10" stroke="url(#nt1)" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- 符尾（旗） -->
+    <path d="M31 10 Q48 18 42 32 Q38 22 31 24" fill="url(#nt1)"/>
   </svg>`},
 
   // 9. 電撃
@@ -557,8 +564,8 @@ const STAMPS=[
     <defs><linearGradient id="cr1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFF5A0"/><stop offset="100%" stop-color="#FFB800"/></linearGradient></defs>
     <polygon points="8,50 8,26 20,40 32,14 44,40 56,26 56,50" fill="url(#cr1)" stroke="#C08000" stroke-width="2" stroke-linejoin="round"/>
     <rect x="8" y="50" width="48" height="9" rx="4" fill="url(#cr1)" stroke="#C08000" stroke-width="2"/>
-    <circle cx="20" cy="41" r="4" fill="#FF3399" stroke="#CC0066" stroke-width="1"/>
-    <circle cx="32" cy="20" r="4.5" fill="#33AAFF" stroke="#0066CC" stroke-width="1"/>
+    <circle cx="20" cy="41" r="4" fill="#33CC33" stroke="#009900" stroke-width="1"/>
+    <circle cx="32" cy="20" r="4.5" fill="#33CC33" stroke="#009900" stroke-width="1"/>
     <circle cx="44" cy="41" r="4" fill="#33CC33" stroke="#009900" stroke-width="1"/>
     <ellipse cx="19" cy="39.5" rx="1.5" ry="1" fill="white" opacity=".6"/>
     <ellipse cx="31" cy="18.5" rx="1.8" ry="1.2" fill="white" opacity=".6"/>
